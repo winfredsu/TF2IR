@@ -13,8 +13,12 @@ class TF2IR(object):
     a json file and a file containing raw params.
 
     Currently supported networks:
-    - Mobilenet-V1
     - Mobilenet-V2-SSD
+
+    Valid ops:
+
+    Conversion rules:
+    - Reshape
 
     """
 
@@ -24,6 +28,8 @@ class TF2IR(object):
         self.img_size = img_size
         self.input_tensor_name = input_tensor_name
 
+        self.net_def = {'layers': []}
+
     def load_graph(self):
         """
         Load the frozen pb
@@ -32,26 +38,55 @@ class TF2IR(object):
         self.gd = tf.GraphDef.FromString(f.read())
         tf.import_graph_def(self.gd, name='')
 
-    def find_all_valid_ops(self):
+    def get_valid_ops(self):
         """
         Find all valid ops in the graph. 
         Valid ops includes:
         - Conv2D
         - DWConv
         """
-        for node in tf.get_default_graph().as_graph_def().node:
-            if 
+        g = tf.get_default_graph()
+        for op in g.get_operations():
+            if op.type == 'Conv2D':
+                op_def = {}
+                op_def['name'] = op.name
+                op_def['type'] = op.type
+                op_def['params'] = {}
+                op_def['params']['strides'] = op.get_attr('strides')
+                op_def['params']['padding'] = op.get_attr('padding').decode()
+                op_def['tensors'] = {}
+                # get the inputs of the conv op
+                
 
+
+                op_def['prev_layers'] = []
+                op_def['next_layers'] = []
+
+                
+
+                print(op.get_attr('padding').decode())
+                break
+
+    def __get_producer(self, tensor):
+        """
+        Get the "real" producer op of the current tensor
+        """
+        op = tensor.op
+        while op.type == 'Identity':
+            tensor = op.inputs[0]
+            op = tensor.op 
+        return op
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract net arch and raw params from quant-aware trained frozen graph')
     parser.add_argument('-d', '--directory', default='.', help='running directory')
-    parser.add_argument('-i', '--input_path', default='frozen.pb', help='input frozen pb')
-    parser.add_argument('--image_height', type=int, default=200, help='input image height')
-    parser.add_argument('--image_width',  type=int, default=200, help='input image width')
-    parser.add_argument('--input_tensor_name', default='input', help='input tensor name')
+    parser.add_argument('-i', '--input_path', default='graph.pb', help='input frozen pb')
+    parser.add_argument('--image_height', type=int, default=300, help='input image height')
+    parser.add_argument('--image_width',  type=int, default=300, help='input image width')
+    parser.add_argument('--input_tensor_name', default='normalized_input_image_tensor', help='input tensor name')
     args = parser.parse_args()
 
-    parser = NetParser(args.directory, [args.image_height, args.image_width], args.input_path, args.input_tensor_name)
-    parser.parse()
-    
+    tf2ir = TF2IR(args.directory, args.input_path, [args.image_height, args.image_width], args.input_tensor_name)
+    tf2ir.load_graph()
+    tf2ir.get_valid_ops()
+
