@@ -2,6 +2,7 @@
 
 import tensorflow as tf
 import numpy as np
+import PIL
 import json
 import os
 import sys
@@ -25,13 +26,15 @@ class TF2IR(object):
 
     """
 
-    def __init__(self, run_dir='.', input_path='graph.pb', img_size=[224,224], input_tensor_name='input', end_points=[]):
+    def __init__(self, run_dir='.', input_path='graph.pb', img_size=[224,224], input_tensor_name='input', end_points=[], test_image='test.jpg'):
         self.run_dir = run_dir
         self.input_path = input_path
         self.img_size = img_size
         self.input_tensor_name = input_tensor_name
         self.end_points = end_points
         self.net_def = {'layers': []}
+        self.test_img = np.array(PIL.Image.open(test_image).resize(self.img_size)).astype(np.float)/128-1
+        self.test_img = self.test_img.reshape(1,self.img_size[0],self.img_size[1],3)
 
 
     def load_graph(self):
@@ -44,79 +47,129 @@ class TF2IR(object):
 
     def traverse_graph(self):
         """
-        Find all valid ops in the graph by BFS.
-        Valid ops includes:
-        - Conv2D
-        - DWConv
+        Find all valid ops in the graph.
         """
         g = tf.get_default_graph()
         input_tensor = g.get_tensor_by_name(self.input_tensor_name)
 
+        ## init the data structures
+        # tensors that are already processed
         tensors_ready = [input_tensor]
+        # discovered op queue
         ops_discovered = self.__get_real_consumers(input_tensor)
+        # dict to store the 'prev_layer' infomation
+        info_prev_layers = {}
+        for op in ops_discovered:
+            info_prev_layers[op.name] = ['input']
 
         while ops_discovered:
             curr_op = None
+
             # find the first op in ops_discovered of which all deps are ready
             for op in ops_discovered:
                 if set(self.__get_dep_tensors(op)) <= set(tensors_ready):
                     curr_op = op
-                    # print('remove ', curr_op.name)
-                    # print('before remove ', len(ops_discovered))
                     ops_discovered.remove(op)
-                    # print('after remove ', len(ops_discovered))                    
                     break
             if curr_op is None:
                 raise ValueError("Error: ops_discovered is not empty, but no op is ready to be processed")
+            
+            # init the dict
+            print(curr_op.name)
+            layer = {'name': curr_op.name}
 
             # extract informations from curr_op
             if curr_op.type in ['Conv2D', 'DepthwiseConv2dNative']:
-                # find the ofm op and add its ouptut to tensors_ready
+                # get ifm/w/b/ofm ops
+                ifm_op = self.__get_conv_ifm_op(curr_op)
+                w_op = self.__get_conv_w_op(curr_op)
+                b_op = self.__get_conv_b_op(curr_op)
                 act_type, ofm_op = self.__get_conv_ofm_op(curr_op)
-                ofm_tensor = ofm_op.outputs[0]
-                tensors_ready.append(ofm_tensor)
-                
-                # find all consumers of the ofm_tensor and add to ops_discovered
-                if not ofm_tensor.name in self.end_points:
-                    consumer_ops = self.__get_real_consumers(ofm_tensor)
-                    print(ofm_tensor.name)
-                    ops_discovered += consumer_ops
-                    # print('add ', [op.name for op in consumer_ops])
+
+                # conv params
+                strides = curr_op.get_attr('strides')[1:3]
+                padding = curr_op.get_attr('padding').decode()
+
+                # size params (needs to eval tensors)
+                # first we evaluate all tensors
+                tensors_to_eval = [op.outputs[0] for op in [ifm_op, w_op, b_op, ofm_op]]
+                ifm_data, w_data, b_data, ofm_data = self.__eval_tensors(tensors_to_eval)
+                # then get the sizes
+                cin = ifm_data.shape[3]
+                ifm_size = ifm_data.shape[1:3] # (H,W)
+                kernel_size = w_data.shape[:2] # (H,W)
+                ofm_size = ofm_data.shape[1:3] # (H,W)
+                cout = ofm_data.shape[3]
+                # calculate padding sizes (t,b,l,r)
+                padding_size = self.__calc_padding_size(padding, strides, ifm_size, kernel_size, ofm_size)
+
+                # quant_params
+                ifm_num_bits, ifm_log2scale = self.__get_quant_params_from_op(ifm_op)
+                w_num_bits, w_log2scale = self.__get_quant_params_from_op(w_op)
+                b_num_bits, b_log2scale = self.__get_quant_params_from_op(b_op)
+                ofm_num_bits, ofm_log2scale = self.__get_quant_params_from_op(ofm_op)
+                b_shift = ifm_log2scale + w_log2scale - b_log2scale
+                assert b_shift >= 0 # TODO: this could be relaxed by forcing the negative b_shift to 0
+                ofm_shift = ifm_log2scale + w_log2scale - ofm_log2scale
+                assert ofm_shift >= 0
+
+                # assign output_tensor
+                output_tensor = ofm_op.outputs[0]
 
             elif curr_op.type == 'Add':
                 # find the ofm op and add it to tensors_ready
                 act_type, ofm_op = self.__get_add_ofm_op(curr_op)
-                ofm_tensor = ofm_op.outputs[0]
-                tensors_ready.append(ofm_tensor)
-
-                # find all consumers of the ofm_tensor and add to ops_discovered
-                if not ofm_tensor.name in self.end_points:
-                    consumer_ops = self.__get_real_consumers(ofm_tensor)
-                    ops_discovered += consumer_ops
-                    # print('add ', [op.name for op in consumer_ops])
+                output_tensor = ofm_op.outputs[0]
 
             elif curr_op.type == 'Reshape':
                 # find the output to tensors_ready
                 output_tensor = curr_op.outputs[0]
-                tensors_ready.append(output_tensor)
-
-                # find all consumers and add to ops_discovered
-                if not output_tensor.name in self.end_points:
-                    consumer_ops = self.__get_real_consumers(ofm_tensor)
-                    ops_discovered += consumer_ops
 
             elif curr_op.type == 'ConcatV2':
                 # find the output to tensors_ready
                 output_tensor = curr_op.outputs[0]
-                tensors_ready.append(output_tensor)
-
-                # find all consumers and add to ops_discovered
-                if not output_tensor.name in self.end_points:
-                    consumer_ops = self.__get_real_consumers(ofm_tensor)
-                    ops_discovered += consumer_ops
 
             else:
                 raise ValueError('Unsupported op: ', curr_op)
+
+            # add output tensor to tensors_ready
+            tensors_ready.append(output_tensor)
+            
+            # fill the prev_layers information
+            prev_layers = info_prev_layers[curr_op.name]
+            layer['prev_layer'] = prev_layers
+
+            # init the next_layers list 
+            next_layers = []
+
+            # if the output tensor is not end_point, add all consumers to ops_discovered
+            if not (output_tensor.name in self.end_points):
+                consumer_ops = self.__get_real_consumers(output_tensor)
+                for op in consumer_ops:
+                    # add op to next_layers
+                    next_layers.append(op.name)
+                    # if the op has not been discovered, add the op to ops_discovered and 
+                    # init the op in the info_prev_layers list
+                    if op not in ops_discovered:
+                        ops_discovered.append(op)
+                        info_prev_layers[op.name] = [curr_op.name]
+                    # if the op has been discovered, update the info_prev_layers
+                    else:
+                        info_prev_layers[op.name].append(curr_op.name)
+            
+            # fill the next_layer information
+            if next_layers:
+                layer['next_layer'] = next_layers
+                
+
+    def __eval_tensors(self, tensors):
+        """
+        evaluate a list of tensors
+        return: a list of numpy array
+        """
+        g = tf.get_default_graph()
+        with tf.Session() as sess:
+            return sess.run(tensors, feed_dict={g.get_tensor_by_name(self.input_tensor_name): self.test_img})
 
     def __get_dep_tensors(self, op):
         """
@@ -169,9 +222,6 @@ class TF2IR(object):
         ops = tensor.consumers()
         flag = 1
         while flag:
-            print(tensor.name)
-            print([op.name for op in ops])
-            print('\n')
             flag = 0
             for op in ops:
                 if op.type == 'Identity':
@@ -181,9 +231,31 @@ class TF2IR(object):
                     ops.remove(op)
         return ops
 
-    def __get_conv_w_tensor(self, op):
+    def __get_conv_ifm_op(self, op):
         assert(op.type == 'Conv2D' or op.type == 'DepthwiseConv2dNative')
-        return op.inputs[1]
+        op_ifm = self.__get_real_producer(op.inputs[0])
+        assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
+        return op_ifm
+
+    def __get_conv_w_op(self, op):
+        assert(op.type == 'Conv2D' or op.type == 'DepthwiseConv2dNative')
+        op_wt = op.inputs[1].op
+        assert op_wt.type == 'FakeQuantWithMinMaxVars'
+        return op_wt
+
+    def __get_conv_b_op(self, op):
+        assert(op.type == 'Conv2D' or op.type == 'DepthwiseConv2dNative')
+        assert len(op.outputs) == 1
+        tensor_conv = op.outputs[0]
+        # the bias add op
+        assert len(tensor_conv.consumers()) == 1
+        op_biasadd = tensor_conv.consumers()[0]
+        # the bias tensor
+        assert op_biasadd.type == 'Add'
+        tensor_bias = op_biasadd.inputs[1]
+        op_bias = tensor_bias.op
+        assert op_bias.type == 'FakeQuantWithMinMaxVars'
+        return op_bias
 
     def __get_conv_ofm_op(self, op):
         """ 
@@ -237,6 +309,18 @@ class TF2IR(object):
         assert len(act_quant_op.outputs) == 1
         return act_type, act_quant_op
 
+    def __get_add_x_op(self, op):
+        assert op.type == 'Add'
+        op_x = self.__get_real_producer(op.input[0])
+        assert op_x.type == 'FakeQuantWithMinMaxVars'
+        return op_x
+    
+    def __get_add_y_op(self, op):
+        assert op.type == 'Add'
+        op_y = self.__get_real_producer(op.input[1])
+        assert op_y.type == 'FakeQuantWithMinMaxVars'
+        return op_y
+
     def __get_add_ofm_op(self, op):
         """ 
         Get the output fakequant op from add op.
@@ -283,27 +367,65 @@ class TF2IR(object):
         assert len(ofm_quant_op.outputs) == 1
         return act_type, ofm_quant_op 
 
-
-
     def __get_quant_params_from_op(self, op):
         """
-        return num_bits and min_po2 (negative)
+        return num_bits and log2(scaling factor)
         """
-        assert op.type == 'FakeQuantWithMinMaxVars'
-        num_bits = op.get_attr('num_bits')
-        min_po2 = op.inputs[1].op.inputs[0].op.get_attr('value').float_val[0]
-        return num_bits, min_po2
+        assert op.type == 'FakeQuantWithMinMaxVars' or op.type == 'Placeholder'
+        if op.type == 'FakeQuantWithMinMaxVars':
+            num_bits = op.get_attr('num_bits')
+            min_po2 = op.inputs[1].op.inputs[0].op.get_attr('value').float_val[0]
+            log_scale = int(np.log2(np.power(2,num_bits-1)/np.abs(min_po2)))
+            return num_bits, log_scale
+        elif op.type == 'Placeholder':
+            # check if this is the input tensor
+            assert op.outputs[0].name == self.input_tensor_name
+            return 8, 16
 
+    def __calc_padding_size(self, padding, strides, ifm_size, kernel_size, ofm_size):
+        """
+        return: [t, b, l, r]
+
+        How to calculate padding size?
+        VALID: all 0
+        SAME: 
+            pads_along_h = max( (ho-1)*s+k-hi, 0 )
+            pads_top = pads_along_h // 2
+            pads_bot = pads_along_h - pads_top
+        """
+        # calculate padding sizes
+        if padding == 'VALID':
+            return [0,0,0,0]
+        elif padding == 'SAME':
+            pads_along_h = (ofm_size[0]-1)*strides[0]+kernel_size[0]-ifm_size[0]
+            pads_along_w = (ofm_size[1]-1)*strides[1]+kernel_size[1]-ifm_size[1]
+            tp = int(np.floor(pads_along_h/2))
+            bp = int(np.ceil(pads_along_h/2))
+            lp = int(np.floor(pads_along_w/2))
+            rp = int(np.ceil(pads_along_w/2))
+            assert tp>=0 and bp>=0 and lp>=0 and rp>=0
+            return [tp,bp,lp,rp]
+        else:
+            raise ValueError('unsupported padding type: ', padding)
 
     def test(self):
         g = tf.get_default_graph()
-        # for op in g.get_operations():
-        #     if op.type == 'ConcatV2':
-        #         print(op.get_attr('N'))
-        #         break
+        for op in g.get_operations():
+            if op.name == 'FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_384/Conv2D_Fold':
+                curr_op = op
 
-        op = g.get_operation_by_name('FeatureExtractor/MobilenetV2/expanded_conv/input')
-        print(len(op.outputs[0].consumers()))
+                # get ifm/w/b/ofm ops
+                ifm_op = self.__get_conv_ifm_op(curr_op)
+                w_op = self.__get_conv_w_op(curr_op)
+                b_op = self.__get_conv_b_op(curr_op)
+                act_type, ofm_op = self.__get_conv_ofm_op(curr_op)
+
+                # size params (needs to eval tensors)
+                # first we evaluate all tensors
+                tensors_to_eval = [op.outputs[0] for op in [ifm_op, w_op, b_op, ofm_op]]
+                ifm_data, w_data, b_data, ofm_data = self.__eval_tensors(tensors_to_eval)
+
+                print(w_data)
 
 
 if __name__ == '__main__':
@@ -313,10 +435,11 @@ if __name__ == '__main__':
     parser.add_argument('--image_height', type=int, default=300, help='input image height')
     parser.add_argument('--image_width',  type=int, default=300, help='input image width')
     parser.add_argument('--input_tensor_name', default='normalized_input_image_tensor:0', help='input tensor name')
-    parser.add_argument('--end_points', default=['concat_1', 'concat'], nargs='+', help='final point names')
+    parser.add_argument('--end_points', default=['concat_1:0', 'concat:0'], nargs='+', help='final point names')
+    parser.add_argument('--test_image', default='test.jpg', help='example input image for evaluating fmaps')
     args = parser.parse_args()
 
-    tf2ir = TF2IR(args.directory, args.input_path, [args.image_height, args.image_width], args.input_tensor_name, args.end_points)
+    tf2ir = TF2IR(args.directory, args.input_path, [args.image_height, args.image_width], args.input_tensor_name, args.end_points, args.test_image)
     tf2ir.load_graph()
     # tf2ir.traverse_graph()
     tf2ir.test()
