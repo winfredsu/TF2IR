@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import argparse
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
 
 VALID_CONV_ACTS = ['Relu6']
 VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'ConcatV2']
@@ -113,12 +114,38 @@ class TF2IR(object):
                 ofm_shift = ifm_log2scale + w_log2scale - ofm_log2scale
                 assert ofm_shift >= 0
 
+                # calc the quantized ifm/w/b/ofm tensors
+                ifm_quant_data = np.squeeze(self.__quant_tensor(ifm_data, ifm_log2scale),0) #HWC
+                w_quant_data = self.__quant_tensor(w_data, w_log2scale) # conv2d:HWCiCo, dwconv: HWC1
+                b_quant_data = self.__quant_tensor(b_data, b_log2scale) # C
+                ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0) # HWC
+
                 # assign output_tensor
                 output_tensor = ofm_op.outputs[0]
 
             elif curr_op.type == 'Add':
-                # find the ofm op and add it to tensors_ready
+                # find x/y/ofm ops
+                x_op = self.__get_add_x_op(curr_op)
+                y_op = self.__get_add_y_op(curr_op)
                 act_type, ofm_op = self.__get_add_ofm_op(curr_op)
+
+                # size params (needs to eval tensors)
+                # first we evaluate all tensors
+                tensors_to_eval = [op.outputs[0] for op in [x_op, y_op, ofm_op]]
+                x_data, y_data, ofm_data = self.__eval_tensors(tensors_to_eval)
+                # then get sizes
+                assert x_data.shape == y_data.shape
+                assert x_data.shape == ofm_data.shape
+                cin = x_data.shape[3]
+                ifm_size = x_data.shape[1:3] # (H,W)
+
+                # quant_params
+                x_num_bits, x_log2scale = self.__get_quant_params_from_op(x_op)
+                y_num_bits, y_log2scale = self.__get_quant_params_from_op(y_op)
+                ofm_num_bits, ofm_log2scale = self.__get_quant_params_from_op(ofm_op)
+
+                print(x_log2scale, y_log2scale, ofm_log2scale)
+
                 output_tensor = ofm_op.outputs[0]
 
             elif curr_op.type == 'Reshape':
@@ -161,6 +188,10 @@ class TF2IR(object):
             if next_layers:
                 layer['next_layer'] = next_layers
                 
+            # append the current layer to net_def
+            self.net_def['layers'].append(layer)
+
+        # print(self.net_def)
 
     def __eval_tensors(self, tensors):
         """
@@ -311,13 +342,13 @@ class TF2IR(object):
 
     def __get_add_x_op(self, op):
         assert op.type == 'Add'
-        op_x = self.__get_real_producer(op.input[0])
+        op_x = self.__get_real_producer(op.inputs[0])
         assert op_x.type == 'FakeQuantWithMinMaxVars'
         return op_x
     
     def __get_add_y_op(self, op):
         assert op.type == 'Add'
-        op_y = self.__get_real_producer(op.input[1])
+        op_y = self.__get_real_producer(op.inputs[1])
         assert op_y.type == 'FakeQuantWithMinMaxVars'
         return op_y
 
@@ -380,7 +411,7 @@ class TF2IR(object):
         elif op.type == 'Placeholder':
             # check if this is the input tensor
             assert op.outputs[0].name == self.input_tensor_name
-            return 8, 16
+            return 8, 0
 
     def __calc_padding_size(self, padding, strides, ifm_size, kernel_size, ofm_size):
         """
@@ -408,6 +439,27 @@ class TF2IR(object):
         else:
             raise ValueError('unsupported padding type: ', padding)
 
+    def __quant_tensor(self, tensor, scale):
+        return (np.power(2,scale)*tensor).astype(np.int32)
+
+    def __add_rounding_to_bias_and_truncate(self, b_quantized, b_ls_raw, ofm_rs):
+        """
+        add half of OFM LSB to bias, so that the hardware can only perform shifting
+        and truncate the bias if the b_ls_raw is negative
+
+        returns:
+        b, b_shift
+        """
+        shift = ofm_rs-1-b_ls_raw
+        if shift >= 0:
+            b_quantized += (1<<shift)
+
+        if b_ls_raw < 0:
+            np.right_shift(b_quantized,-b_ls_raw)
+            return b_quantized, 0
+        else:
+            return b_quantized, b_ls_raw
+
     def test(self):
         g = tf.get_default_graph()
         for op in g.get_operations():
@@ -432,8 +484,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract net arch and raw params from quant-aware trained frozen graph')
     parser.add_argument('-d', '--directory', default='.', help='running directory')
     parser.add_argument('-i', '--input_path', default='graph.pb', help='input frozen pb')
-    parser.add_argument('--image_height', type=int, default=300, help='input image height')
-    parser.add_argument('--image_width',  type=int, default=300, help='input image width')
+    parser.add_argument('--image_height', type=int, default=160, help='input image height')
+    parser.add_argument('--image_width',  type=int, default=160, help='input image width')
     parser.add_argument('--input_tensor_name', default='normalized_input_image_tensor:0', help='input tensor name')
     parser.add_argument('--end_points', default=['concat_1:0', 'concat:0'], nargs='+', help='final point names')
     parser.add_argument('--test_image', default='test.jpg', help='example input image for evaluating fmaps')
@@ -441,6 +493,6 @@ if __name__ == '__main__':
 
     tf2ir = TF2IR(args.directory, args.input_path, [args.image_height, args.image_width], args.input_tensor_name, args.end_points, args.test_image)
     tf2ir.load_graph()
-    # tf2ir.traverse_graph()
-    tf2ir.test()
+    tf2ir.traverse_graph()
+    # tf2ir.test()
 

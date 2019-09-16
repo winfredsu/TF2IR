@@ -7,6 +7,8 @@ IR def problems:
 6. Input tensor and endpoints?
 7. 'add' and 'pl' in add op?
 8. Reshape and Concat op definition. 
+9. How to handle rounding in NN Lib?
+10. "output_shift_bit": -1 in 'Add' operation.
 
 {
     "Layer_0_Conv": {
@@ -20,34 +22,34 @@ IR def problems:
         "input_size": {
             "height": 32,
             "width": 32
-        },
-        "padding": {
-            "top": 1,
-            "bottom": 1,
-            "left": 1,
-            "right": 1
-        },
-        "stride": {
-            "height": 1,
-            "width": 1
-        },
-        "kernel_size": {
-            "height": 3,
-            "width": 3
-        },
-        "output_size": {
-            "height": 32,
-            "width": 32
-        },
-        "input_dtype": "int8",
-        "output_dtype": "int8",
-        "weight_dtype": "int8",
-        "bias_dtype": "float",
-        "previous_layer": [
-            "input"
-        ],
-        "next_layer": [
-            "Layer_1_BatchNormalization"
+        },"output_shift_bit": -1,
+        "p"output_shift_bit": -1,
+          "output_shift_bit": -1,
+          "output_shift_bit": -1,
+          "output_shift_bit": -1,
+          "output_shift_bit": -1,
+        },"output_shift_bit": -1,
+        "s"output_shift_bit": -1,
+          "output_shift_bit": -1,
+          "output_shift_bit": -1,
+        },"output_shift_bit": -1,
+        "k"output_shift_bit": -1,
+          "output_shift_bit": -1,
+          "output_shift_bit": -1,
+        },"output_shift_bit": -1,
+        "o"output_shift_bit": -1,
+          "output_shift_bit": -1,
+          "output_shift_bit": -1,
+        },"output_shift_bit": -1,
+        "i"output_shift_bit": -1,
+        "o"output_shift_bit": -1,
+        "w"output_shift_bit": -1,
+        "b"output_shift_bit": -1,
+        "p"output_shift_bit": -1,
+          "output_shift_bit": -1,
+        ],"output_shift_bit": -1,
+        "n"output_shift_bit": -1,
+          "output_shift_bit": -1,
         ]
     },
     "Layer_1_BatchNormalization": {
