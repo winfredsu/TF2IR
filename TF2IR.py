@@ -5,6 +5,7 @@ import numpy as np
 import PIL
 import json
 import os
+import shutil
 import sys
 import argparse
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
@@ -20,15 +21,10 @@ class TF2IR(object):
     Currently supported networks:
     - Mobilenet-V2-SSD
 
-    Valid ops:
-
-    Conversion rules:
-    - Reshape
-
     """
 
-    def __init__(self, run_dir='.', input_path='graph.pb', img_size=[224,224], input_tensor_name='input', end_points=[], test_image='test.jpg'):
-        self.run_dir = run_dir
+    def __init__(self, input_path='graph.pb', output_path='.', img_size=[224,224], input_tensor_name='input', end_points=[], test_image='test.jpg'):
+        self.output_path = output_path
         self.input_path = input_path
         self.img_size = img_size
         self.input_tensor_name = input_tensor_name
@@ -37,12 +33,21 @@ class TF2IR(object):
         self.test_img = np.array(PIL.Image.open(test_image).resize(self.img_size)).astype(np.float)/128-1
         self.test_img = self.test_img.reshape(1,self.img_size[0],self.img_size[1],3)
 
+        self.output_param_path = os.path.join(output_path, 'params')            
+        self.output_netdef_path = os.path.join(output_path, 'net_def.json')
+
+        if not os.path.exists(self.output_path):
+            os.makedirs(self.output_path)
+        
+        if os.path.exists(self.output_param_path):
+            shutil.rmtree(self.output_param_path)
+        os.makedirs(self.output_param_path)
 
     def load_graph(self):
         """
         Load the frozen pb
         """
-        f = open(os.path.join(self.run_dir, self.input_path), 'rb')
+        f = open(self.input_path, 'rb')
         self.gd = tf.GraphDef.FromString(f.read())
         tf.import_graph_def(self.gd, name='')
 
@@ -77,7 +82,7 @@ class TF2IR(object):
             
             # init the dict
             print(curr_op.name)
-            layer = {'name': curr_op.name}
+            layer = {'name': curr_op.name.replace('/','_')}
 
             # extract informations from curr_op
             if curr_op.type in ['Conv2D', 'DepthwiseConv2dNative']:
@@ -120,6 +125,34 @@ class TF2IR(object):
                 b_quant_data = self.__quant_tensor(b_data, b_log2scale) # C
                 ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0) # HWC
 
+                # fill layer dict
+                if curr_op.type == 'Conv2D':
+                    layer['operation'] = 'conv'
+                elif curr_op.type == 'DepthwiseConv2dNative':
+                    layer['operation'] = 'dwconv'
+                layer['activation_type'] = act_type
+                layer['output_shift'] = ofm_shift
+                layer['bias_shift'] = b_shift
+                layer['load_bias'] = True
+                layer['input_channel_num'] = cin
+                layer['output_channel_num'] = cout
+                layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
+                layer['padding'] = {'top': padding_size[0], 'bottom': padding_size[1],
+                                    'left': padding_size[2], 'right': padding_size[3]}
+                layer['stride'] = {'height': strides[0], 'width': strides[1]}
+                layer['kernel_size'] = {'height': kernel_size[0], 'width': kernel_size[1]}
+                layer['output_size'] = {'height': ofm_size[0], 'width': ofm_size[1]}
+                layer['input_dtype'] = 'int8'
+                layer['output_dtype'] = 'int8'
+                layer['weight_dtype'] = 'int8'
+                layer['bias_dtype'] = 'int8'
+
+                # save the tensors
+                ifm_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_ifm.raw'))
+                w_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_weight.raw'))
+                b_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_bias.raw'))
+                ofm_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_ofm.raw'))
+                
                 # assign output_tensor
                 output_tensor = ofm_op.outputs[0]
 
@@ -143,8 +176,13 @@ class TF2IR(object):
                 x_num_bits, x_log2scale = self.__get_quant_params_from_op(x_op)
                 y_num_bits, y_log2scale = self.__get_quant_params_from_op(y_op)
                 ofm_num_bits, ofm_log2scale = self.__get_quant_params_from_op(ofm_op)
+                ofm_shift = min() - ofm_log2scale
+                # print(x_log2scale, y_log2scale, ofm_log2scale)
 
-                print(x_log2scale, y_log2scale, ofm_log2scale)
+                # calc the quantized ifm/w/b/ofm tensors
+                x_quant_data = np.squeeze(self.__quant_tensor(x_data, x_log2scale),0)
+                y_quant_data = np.squeeze(self.__quant_tensor(y_data, y_log2scale),0)
+                ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0)
 
                 output_tensor = ofm_op.outputs[0]
 
@@ -187,11 +225,11 @@ class TF2IR(object):
             # fill the next_layer information
             if next_layers:
                 layer['next_layer'] = next_layers
+            else:
+                layer['next_layer'] = ['endpoint']
                 
             # append the current layer to net_def
             self.net_def['layers'].append(layer)
-
-        # print(self.net_def)
 
     def __eval_tensors(self, tensors):
         """
@@ -411,7 +449,7 @@ class TF2IR(object):
         elif op.type == 'Placeholder':
             # check if this is the input tensor
             assert op.outputs[0].name == self.input_tensor_name
-            return 8, 0
+            return 8, 7
 
     def __calc_padding_size(self, padding, strides, ifm_size, kernel_size, ofm_size):
         """
@@ -460,30 +498,42 @@ class TF2IR(object):
         else:
             return b_quantized, b_ls_raw
 
+    def export_net_def(self):
+        """
+        export formatted json file
+        """
+        f = open(self.output_netdef_path, 'w')
+        f.write(json.dumps(self.net_def['layers'], indent=2))
+        f.close()        
+
     def test(self):
-        g = tf.get_default_graph()
-        for op in g.get_operations():
-            if op.name == 'FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_384/Conv2D_Fold':
-                curr_op = op
+        a = np.fromfile('models/mobilenet_v2_ssd_0.25_160/params/FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold_ifm.raw',
+        dtype=np.int8)
+        print(max(a))
+        print(min(a))
+        # g = tf.get_default_graph()
+        # for op in g.get_operations():
+        #     if op.type == 'Conv2D':
+        #         curr_op = op
 
-                # get ifm/w/b/ofm ops
-                ifm_op = self.__get_conv_ifm_op(curr_op)
-                w_op = self.__get_conv_w_op(curr_op)
-                b_op = self.__get_conv_b_op(curr_op)
-                act_type, ofm_op = self.__get_conv_ofm_op(curr_op)
+        #         # get ifm/w/b/ofm ops
+        #         ifm_op = self.__get_conv_ifm_op(curr_op)
+        #         w_op = self.__get_conv_w_op(curr_op)
+        #         b_op = self.__get_conv_b_op(curr_op)
+        #         act_type, ofm_op = self.__get_conv_ofm_op(curr_op)
 
-                # size params (needs to eval tensors)
-                # first we evaluate all tensors
-                tensors_to_eval = [op.outputs[0] for op in [ifm_op, w_op, b_op, ofm_op]]
-                ifm_data, w_data, b_data, ofm_data = self.__eval_tensors(tensors_to_eval)
+        #         # size params (needs to eval tensors)
+        #         # first we evaluate all tensors
+        #         tensors_to_eval = [op.outputs[0] for op in [ifm_op, w_op, b_op, ofm_op]]
+        #         ifm_data, w_data, b_data, ofm_data = self.__eval_tensors(tensors_to_eval)
 
-                print(w_data)
+        #         print(w_data)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract net arch and raw params from quant-aware trained frozen graph')
-    parser.add_argument('-d', '--directory', default='.', help='running directory')
     parser.add_argument('-i', '--input_path', default='graph.pb', help='input frozen pb')
+    parser.add_argument('-o', '--output_path', default='.', help='output directory')
     parser.add_argument('--image_height', type=int, default=160, help='input image height')
     parser.add_argument('--image_width',  type=int, default=160, help='input image width')
     parser.add_argument('--input_tensor_name', default='normalized_input_image_tensor:0', help='input tensor name')
@@ -491,8 +541,9 @@ if __name__ == '__main__':
     parser.add_argument('--test_image', default='test.jpg', help='example input image for evaluating fmaps')
     args = parser.parse_args()
 
-    tf2ir = TF2IR(args.directory, args.input_path, [args.image_height, args.image_width], args.input_tensor_name, args.end_points, args.test_image)
+    tf2ir = TF2IR(args.input_path, args.output_path, [args.image_height, args.image_width], args.input_tensor_name, args.end_points, args.test_image)
     tf2ir.load_graph()
     tf2ir.traverse_graph()
+    tf2ir.export_net_def()
     # tf2ir.test()
 
