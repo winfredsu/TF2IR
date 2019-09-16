@@ -10,7 +10,8 @@ import sys
 import argparse
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
 
-VALID_CONV_ACTS = ['Relu6']
+VALID_ACTS = ['Relu6']
+VALID_CONV_OPS = ['Conv2D', 'DepthwiseConv2dNative']
 VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'ConcatV2']
 
 class TF2IR(object):
@@ -158,8 +159,8 @@ class TF2IR(object):
 
             elif curr_op.type == 'Add':
                 # find x/y/ofm ops
-                x_op = self.__get_add_x_op(curr_op)
-                y_op = self.__get_add_y_op(curr_op)
+                x_op, x_conv_op = self.__get_add_x_op(curr_op)
+                y_op, y_conv_op = self.__get_add_y_op(curr_op)
                 act_type, ofm_op = self.__get_add_ofm_op(curr_op)
 
                 # size params (needs to eval tensors)
@@ -176,14 +177,28 @@ class TF2IR(object):
                 x_num_bits, x_log2scale = self.__get_quant_params_from_op(x_op)
                 y_num_bits, y_log2scale = self.__get_quant_params_from_op(y_op)
                 ofm_num_bits, ofm_log2scale = self.__get_quant_params_from_op(ofm_op)
-                ofm_shift = min() - ofm_log2scale
-                # print(x_log2scale, y_log2scale, ofm_log2scale)
+                ofm_shift = ofm_log2scale - min(x_log2scale, y_log2scale)
 
                 # calc the quantized ifm/w/b/ofm tensors
                 x_quant_data = np.squeeze(self.__quant_tensor(x_data, x_log2scale),0)
                 y_quant_data = np.squeeze(self.__quant_tensor(y_data, y_log2scale),0)
                 ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0)
+                print(ofm_quant_data.shape)
 
+                # fill the layer dict
+                layer['operation'] = 'add'
+                layer['activation_type'] = act_type
+                layer['size'] = cin*ifm_size[0]*ifm_size[1]
+                layer['input_channel_num'] = cin
+                layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
+                layer['dtype'] = 'int8'
+                layer['pl_shift_bit'] = x_log2scale
+                layer['add_shift_bit'] = y_log2scale
+                layer['output_shift_bit'] = ofm_shift
+                layer['pl_name'] = x_conv_op.name.replace('/', '_')
+                layer['add_name'] = y_conv_op.name.replace('/', '_')
+                
+                # assign output_tensor
                 output_tensor = ofm_op.outputs[0]
 
             elif curr_op.type == 'Reshape':
@@ -363,7 +378,7 @@ class TF2IR(object):
         if ops_found[0].type == 'FakeQuantWithMinMaxVars':
             pass
         # else if the found op is an activation
-        elif ops_found[0].type in VALID_CONV_ACTS:
+        elif ops_found[0].type in VALID_ACTS:
             act_op = ops_found[0]
             act_type = act_op.type
             assert len(act_op.outputs) == 1
@@ -379,16 +394,45 @@ class TF2IR(object):
         return act_type, act_quant_op
 
     def __get_add_x_op(self, op):
+        """
+        return the output op and the layer op of x
+        """
         assert op.type == 'Add'
         op_x = self.__get_real_producer(op.inputs[0])
         assert op_x.type == 'FakeQuantWithMinMaxVars'
-        return op_x
+        op_conv_x = self.__get_conv_op_from_output(op_x)
+        return op_x, op_conv_x
     
     def __get_add_y_op(self, op):
         assert op.type == 'Add'
         op_y = self.__get_real_producer(op.inputs[1])
         assert op_y.type == 'FakeQuantWithMinMaxVars'
-        return op_y
+        op_conv_y = self.__get_conv_op_from_output(op_y)
+        return op_y, op_conv_y
+
+    def __get_conv_op_from_output(self, op):
+        """
+        The connections after the conv op should be:
+        #    CONV   BIAS
+        #        \ /
+        #        ADD
+        #         |
+        # (Relu6 or Identities)
+        #         |
+        #      FakeQuant
+        """
+        assert op.type == 'FakeQuantWithMinMaxVars'
+        op_tmp = self.__get_real_producer(op.inputs[0])
+        if op_tmp.type in VALID_ACTS:
+            # found a relu
+            op_tmp = self.__get_real_producer(op.inputs[0])
+        
+        # now op_tmp should be the add op
+        assert op_tmp.type == 'Add'
+        op_conv = self.__get_real_producer(op_tmp.inputs[0])
+        assert op_conv.type in VALID_CONV_OPS
+        return op_conv
+
 
     def __get_add_ofm_op(self, op):
         """ 
@@ -421,7 +465,7 @@ class TF2IR(object):
         if ops_found[0].type == 'FakeQuantWithMinMaxVars':
             pass
         # else if the found op is an activation
-        elif ops_found[0].type in VALID_CONV_ACTS:
+        elif ops_found[0].type in VALID_ACTS:
             act_op = ops_found[0]
             act_type = act_op.type
             assert len(act_op.outputs) == 1
