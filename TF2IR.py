@@ -73,7 +73,8 @@ class TF2IR(object):
             curr_op = None
 
             # find the first op in ops_discovered of which all deps are ready
-            for op in ops_discovered:
+            # for op in ops_discovered:
+            for op in reversed(ops_discovered):
                 if set(self.__get_dep_tensors(op)) <= set(tensors_ready):
                     curr_op = op
                     ops_discovered.remove(op)
@@ -191,7 +192,8 @@ class TF2IR(object):
                 # fill the layer dict
                 layer['operation'] = 'add'
                 layer['activation_type'] = act_type
-                layer['size'] = cin*ifm_size[0]*ifm_size[1]
+                # the 'size' key is deprecated since it relies on in-memory format of tensor
+                # layer['size'] = cin*ifm_size[0]*ifm_size[1]
                 layer['input_channel_num'] = cin
                 layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
                 layer['dtype'] = 'int8'

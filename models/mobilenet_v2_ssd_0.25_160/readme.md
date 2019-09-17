@@ -16,9 +16,11 @@
 2. 由于硬件需要conv和relu打包成一个算子，Conv/DWconv层新增名为`activation_type`的键, 可选值为`None`和`Relu6`.
 3. 添加input/output/w/b的log2scale，目前没用到
 
+
 ## Add
 1. 新增Feature Map Size信息， 即input_size和input_channel_num
 2. 由于Add操作后也可能出现relu, 新增名为`activation_type`的键，定义同conv中的描述。
+3. 由于实际add size与tensor排布有关（可能需要16/32bit对齐），删除size键，改用Feature map size 计算信息。
 4. pl_shift_bit和add_shift_bit**重命名**为pl_log2scale和add_log2scale, 添加output_log2scale(目前没用)
 5. output_shift_bit = output_log2scale - min(pl_log2scale, add_log2scale)
 
