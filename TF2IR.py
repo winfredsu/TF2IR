@@ -12,7 +12,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
 
 VALID_ACTS = ['Relu6']
 VALID_CONV_OPS = ['Conv2D', 'DepthwiseConv2dNative']
-VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'ConcatV2']
+VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape']
 
 class TF2IR(object):
     """
@@ -132,6 +132,10 @@ class TF2IR(object):
                 elif curr_op.type == 'DepthwiseConv2dNative':
                     layer['operation'] = 'dwconv'
                 layer['activation_type'] = act_type
+                layer['input_log2scale'] = ifm_log2scale
+                layer['weight_log2scale']  = w_log2scale
+                layer['bias_log2scale']  = b_log2scale
+                layer['output_log2scale'] = ofm_log2scale
                 layer['output_shift'] = ofm_shift
                 layer['bias_shift'] = b_shift
                 layer['load_bias'] = True
@@ -149,11 +153,11 @@ class TF2IR(object):
                 layer['bias_dtype'] = 'int8'
 
                 # save the tensors
-                ifm_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_ifm.raw'))
-                w_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_weight.raw'))
-                b_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_bias.raw'))
-                ofm_quant_data.tofile(os.path.join(self.output_param_path, layer['name']+'_ofm.raw'))
-                
+                np.save(os.path.join(self.output_param_path, layer['name']+'_input.npy'), ifm_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_weight.npy'), w_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_bias.npy'), b_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_output.npy'), ofm_quant_data) 
+                                                            
                 # assign output_tensor
                 output_tensor = ofm_op.outputs[0]
 
@@ -183,7 +187,6 @@ class TF2IR(object):
                 x_quant_data = np.squeeze(self.__quant_tensor(x_data, x_log2scale),0)
                 y_quant_data = np.squeeze(self.__quant_tensor(y_data, y_log2scale),0)
                 ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0)
-                print(ofm_quant_data.shape)
 
                 # fill the layer dict
                 layer['operation'] = 'add'
@@ -192,22 +195,58 @@ class TF2IR(object):
                 layer['input_channel_num'] = cin
                 layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
                 layer['dtype'] = 'int8'
-                layer['pl_shift_bit'] = x_log2scale
-                layer['add_shift_bit'] = y_log2scale
+                layer['pl_log2scale'] = x_log2scale
+                layer['add_log2scale'] = y_log2scale
+                layer['output_log2scale'] = ofm_log2scale
                 layer['output_shift_bit'] = ofm_shift
                 layer['pl_name'] = x_conv_op.name.replace('/', '_')
                 layer['add_name'] = y_conv_op.name.replace('/', '_')
                 
+                # save tensors
+                np.save(os.path.join(self.output_param_path, layer['name']+'_pl.npy'), x_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_add.npy'), y_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_output.npy'), ofm_quant_data)
+
                 # assign output_tensor
                 output_tensor = ofm_op.outputs[0]
 
             elif curr_op.type == 'Reshape':
-                # find the output to tensors_ready
+                # get reshape params
+                # size params (needs to eval tensor)
+                shape_tensor = self.__get_reshape_params_from_op(op)
+                tensors_to_eval = [op.inputs[0], op.outputs[0], shape_tensor]
+                input_data, output_data, shape_data = self.__eval_tensors(tensors_to_eval)
+                input_shape = input_data.shape[1:]  # omit the N field
+                output_shape = output_data.shape[1:] # omit the N field
+                reshape_param = shape_data[1:]    # omit the N field
+
+                # find the nearest previous fakequant, and get the params
+                quant_op = self.__get_previous_quant_op(curr_op.inputs[0])
+                num_bits, log2scale = self.__get_quant_params_from_op(quant_op)                
+                assert num_bits == 8
+
+                # fill the layer dict
+                layer['operation'] = 'reshape'
+                layer['reshape_param'] = reshape_param.tolist()
+                layer['input_shape'] = input_shape
+                layer['output_shape'] = output_shape
+                layer['dtype'] = 'int8'
+                layer['log2scale'] = log2scale
+
+                # get the quantized tensors
+                input_quant_data = np.squeeze(self.__quant_tensor(input_data, log2scale),0)
+                output_quant_data = np.squeeze(self.__quant_tensor(output_data, log2scale), 0)
+
+                # save tensors 
+                np.save(os.path.join(self.output_param_path, layer['name']+'_input.npy'), input_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_output.npy'), output_quant_data)
+
+                # assign output_tensor
                 output_tensor = curr_op.outputs[0]
 
-            elif curr_op.type == 'ConcatV2':
-                # find the output to tensors_ready
-                output_tensor = curr_op.outputs[0]
+            # elif curr_op.type == 'ConcatV2':
+            #     # find the output to tensors_ready
+            #     output_tensor = curr_op.outputs[0]
 
             else:
                 raise ValueError('Unsupported op: ', curr_op)
@@ -217,7 +256,7 @@ class TF2IR(object):
             
             # fill the prev_layers information
             prev_layers = info_prev_layers[curr_op.name]
-            layer['prev_layer'] = prev_layers
+            layer['prev_layer'] = [s.replace('/','_') for s in prev_layers]
 
             # init the next_layers list 
             next_layers = []
@@ -239,7 +278,7 @@ class TF2IR(object):
             
             # fill the next_layer information
             if next_layers:
-                layer['next_layer'] = next_layers
+                layer['next_layer'] = [s.replace('/', '_') for s in next_layers]
             else:
                 layer['next_layer'] = ['endpoint']
                 
@@ -400,19 +439,19 @@ class TF2IR(object):
         assert op.type == 'Add'
         op_x = self.__get_real_producer(op.inputs[0])
         assert op_x.type == 'FakeQuantWithMinMaxVars'
-        op_conv_x = self.__get_conv_op_from_output(op_x)
-        return op_x, op_conv_x
+        op_layer_x = self.__get_layer_op_from_output(op_x)
+        return op_x, op_layer_x
     
     def __get_add_y_op(self, op):
         assert op.type == 'Add'
         op_y = self.__get_real_producer(op.inputs[1])
         assert op_y.type == 'FakeQuantWithMinMaxVars'
-        op_conv_y = self.__get_conv_op_from_output(op_y)
-        return op_y, op_conv_y
+        op_layer_y = self.__get_layer_op_from_output(op_y)
+        return op_y, op_layer_y
 
-    def __get_conv_op_from_output(self, op):
+    def __get_layer_op_from_output(self, op):
         """
-        The connections after the conv op should be:
+        The connections after the conv op could be:
         #    CONV   BIAS
         #        \ /
         #        ADD
@@ -420,19 +459,35 @@ class TF2IR(object):
         # (Relu6 or Identities)
         #         |
         #      FakeQuant
+
+        OR
+
+        The connections near the ADD op could be:
+        #    IFM0   IFM1
+        #        \ /
+        #        ADD
+        #         |
+        # (Relu or Identities)
+        #         |
+        #      FakeQuant        
         """
         assert op.type == 'FakeQuantWithMinMaxVars'
         op_tmp = self.__get_real_producer(op.inputs[0])
         if op_tmp.type in VALID_ACTS:
-            # found a relu
-            op_tmp = self.__get_real_producer(op.inputs[0])
+            # skip all relu and identities
+            op_tmp = self.__get_real_producer(op_tmp.inputs[0])
         
         # now op_tmp should be the add op
+        if op_tmp.type != 'Add':
+            print(op_tmp)
         assert op_tmp.type == 'Add'
         op_conv = self.__get_real_producer(op_tmp.inputs[0])
-        assert op_conv.type in VALID_CONV_OPS
-        return op_conv
-
+        if op_conv.type in VALID_CONV_OPS:
+            # the add is bias add
+            return op_conv
+        elif op_conv.type == 'FakeQuantWithMinMaxVars':
+            # this is a add layer
+            return op_tmp
 
     def __get_add_ofm_op(self, op):
         """ 
@@ -480,6 +535,13 @@ class TF2IR(object):
         assert len(ofm_quant_op.outputs) == 1
         return act_type, ofm_quant_op 
 
+    def __get_reshape_params_from_op(self, op):
+        """
+        return reshape params tensor
+        """
+        assert op.type == 'Reshape'
+        return op.inputs[1]
+
     def __get_quant_params_from_op(self, op):
         """
         return num_bits and log2(scaling factor)
@@ -494,6 +556,16 @@ class TF2IR(object):
             # check if this is the input tensor
             assert op.outputs[0].name == self.input_tensor_name
             return 8, 7
+
+    def __get_previous_quant_op(self, tensor):
+        """ 
+        find the nearest previous fake quant op
+        TODO: how to make sure all ops have exactly 1 input?
+        """
+        while tensor.op.type != 'FakeQuantWithMinMaxVars':
+            tensor = tensor.op.inputs[0]
+        
+        return tensor.op
 
     def __calc_padding_size(self, padding, strides, ifm_size, kernel_size, ofm_size):
         """
@@ -551,27 +623,23 @@ class TF2IR(object):
         f.close()        
 
     def test(self):
-        a = np.fromfile('models/mobilenet_v2_ssd_0.25_160/params/FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold_ifm.raw',
-        dtype=np.int8)
-        print(max(a))
-        print(min(a))
-        # g = tf.get_default_graph()
-        # for op in g.get_operations():
-        #     if op.type == 'Conv2D':
-        #         curr_op = op
+        g = tf.get_default_graph()
+        for op in g.get_operations():
+            if op.name == 'BoxPredictor_0/Reshape_1':
+                # get reshape params
+                # size params (needs to eval tensor)
+                shape_tensor = self.__get_reshape_params_from_op(op)
+                tensors_to_eval = [op.inputs[0], op.outputs[0], shape_tensor]
+                input_data, output_data, shape_data = self.__eval_tensors(tensors_to_eval)
+                input_shape = input_data.shape[1:]  # omit the N field
+                output_shape = input_data.shape[1:] # omit the N field
+                reshape_param = shape_tensor[1:]    # omit the N field
 
-        #         # get ifm/w/b/ofm ops
-        #         ifm_op = self.__get_conv_ifm_op(curr_op)
-        #         w_op = self.__get_conv_w_op(curr_op)
-        #         b_op = self.__get_conv_b_op(curr_op)
-        #         act_type, ofm_op = self.__get_conv_ofm_op(curr_op)
+                # size params (needs to eval tensors)
+                # first we evaluate all tensors
+                # tensors_to_eval = [op.outputs[0] for op in [ifm_op, w_op, b_op, ofm_op]]
+                # ifm_data, w_data, b_data, ofm_data = self.__eval_tensors(tensors_to_eval)
 
-        #         # size params (needs to eval tensors)
-        #         # first we evaluate all tensors
-        #         tensors_to_eval = [op.outputs[0] for op in [ifm_op, w_op, b_op, ofm_op]]
-        #         ifm_data, w_data, b_data, ofm_data = self.__eval_tensors(tensors_to_eval)
-
-        #         print(w_data)
 
 
 if __name__ == '__main__':
@@ -581,7 +649,10 @@ if __name__ == '__main__':
     parser.add_argument('--image_height', type=int, default=160, help='input image height')
     parser.add_argument('--image_width',  type=int, default=160, help='input image width')
     parser.add_argument('--input_tensor_name', default='normalized_input_image_tensor:0', help='input tensor name')
-    parser.add_argument('--end_points', default=['concat_1:0', 'concat:0'], nargs='+', help='final point names')
+    parser.add_argument('--end_points', default=[
+        'BoxPredictor_0/Reshape_1:0', 'BoxPredictor_1/Reshape_1:0', 'BoxPredictor_2/Reshape_1:0', 'BoxPredictor_3/Reshape_1:0', 'BoxPredictor_4/Reshape_1:0', 'BoxPredictor_5/Reshape_1:0', 
+        'BoxPredictor_0/Reshape:0', 'BoxPredictor_1/Reshape:0', 'BoxPredictor_2/Reshape:0', 'BoxPredictor_3/Reshape:0', 'BoxPredictor_4/Reshape:0', 'BoxPredictor_5/Reshape:0'], 
+        nargs='+', help='final point names')
     parser.add_argument('--test_image', default='test.jpg', help='example input image for evaluating fmaps')
     args = parser.parse_args()
 

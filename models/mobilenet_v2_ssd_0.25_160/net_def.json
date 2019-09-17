@@ -3,6 +3,10 @@
     "name": "FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 7,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 7,
     "load_bias": true,
@@ -38,14 +42,18 @@
       "input"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv/depthwise/depthwise_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_depthwise_depthwise_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -78,16 +86,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/Conv/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 6,
     "load_bias": true,
@@ -120,26 +132,45 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 102400,
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 80,
+      "width": 80
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "add_log2scale": 4,
+    "output_log2scale": 3,
+    "output_shift_bit": -1,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/Conv/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_1/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_1_expand_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_1_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 3,
+    "weight_log2scale": 7,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 6,
     "load_bias": true,
@@ -172,16 +203,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_1/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_1_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_1_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -214,16 +249,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_1/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_1_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_1/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -256,17 +295,21 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_1/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_1_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_2_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 5,
     "load_bias": true,
@@ -299,16 +342,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_1/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_2_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -341,16 +388,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_2_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -383,26 +434,45 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_2_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 25600,
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 40,
+      "width": 40
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "add_log2scale": 2,
+    "output_log2scale": 1,
+    "output_shift_bit": -1,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_2_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_1/project/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_3/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_3_expand_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_3_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 5,
     "bias_shift": 4,
     "load_bias": true,
@@ -435,16 +505,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_2/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_2_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_3/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_3_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_3_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -477,16 +551,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_3/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_3_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_3/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 9,
     "bias_shift": 7,
     "load_bias": true,
@@ -519,17 +597,21 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_3/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_3_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_4_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 5,
     "load_bias": true,
@@ -562,16 +644,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_3/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_4_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -604,16 +690,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_4_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -646,27 +736,46 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_4_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 6400,
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 20,
+      "width": 20
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "add_log2scale": 2,
+    "output_log2scale": 2,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_4_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_3/project/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_5_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 5,
     "load_bias": true,
@@ -699,16 +808,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_5_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -741,16 +854,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_5_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -783,26 +900,45 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_5_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 6400,
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 20,
+      "width": 20
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "add_log2scale": 2,
+    "output_log2scale": 1,
+    "output_shift_bit": -1,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_5_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_4_add",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_4/add",
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_4_add",
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_6/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_6_expand_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_6_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 5,
     "load_bias": true,
@@ -835,16 +971,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_5/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_5_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_6/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_6_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_6_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -877,16 +1017,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_6/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_6_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_6/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 1,
     "output_shift": 10,
     "bias_shift": 6,
     "load_bias": true,
@@ -919,17 +1063,21 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_6/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_6_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_7_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 4,
     "load_bias": true,
@@ -962,16 +1110,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_6/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_7_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 5,
     "bias_shift": 4,
     "load_bias": true,
@@ -1004,16 +1156,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_7_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -1046,27 +1202,46 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_7_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 1600,
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 10,
+      "width": 10
+    },
+    "dtype": "int8",
+    "pl_log2scale": 3,
+    "add_log2scale": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_7_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_6/project/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_8_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 4,
     "load_bias": true,
@@ -1099,16 +1274,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_8_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 3,
     "load_bias": true,
@@ -1141,16 +1320,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_8_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -1183,27 +1366,46 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_8_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 1600,
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 10,
+      "width": 10
+    },
+    "dtype": "int8",
+    "pl_log2scale": 3,
+    "add_log2scale": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_8_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_7_add",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_7/add",
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_7_add",
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_9_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 4,
     "load_bias": true,
@@ -1236,16 +1438,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_9_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 3,
     "load_bias": true,
@@ -1278,16 +1484,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_9_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 2,
     "output_shift": 9,
     "bias_shift": 6,
     "load_bias": true,
@@ -1320,26 +1530,45 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_9_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 1600,
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 10,
+      "width": 10
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "add_log2scale": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_9_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_8_add",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_8/add",
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_8_add",
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_10/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_10_expand_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_10_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 4,
     "load_bias": true,
@@ -1372,16 +1601,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_9/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_9_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_10/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_10_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_10_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 3,
     "load_bias": true,
@@ -1414,16 +1647,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_10/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_10_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_10/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 2,
     "output_shift": 9,
     "bias_shift": 6,
     "load_bias": true,
@@ -1456,17 +1693,21 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_10/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_10_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_11_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 6,
     "bias_shift": 4,
     "load_bias": true,
@@ -1499,16 +1740,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_10/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_11_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 3,
     "load_bias": true,
@@ -1541,16 +1786,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_11_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -1583,27 +1832,46 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_11_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 2400,
+    "input_channel_num": 24,
+    "input_size": {
+      "height": 10,
+      "width": 10
+    },
+    "dtype": "int8",
+    "pl_log2scale": 3,
+    "add_log2scale": 2,
+    "output_log2scale": 2,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_11_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_10/project/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_12_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 5,
     "load_bias": true,
@@ -1636,16 +1904,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_12_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 3,
     "load_bias": true,
@@ -1678,16 +1950,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_12_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -1720,26 +1996,45 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_12_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 2400,
+    "input_channel_num": 24,
+    "input_size": {
+      "height": 10,
+      "width": 10
+    },
+    "dtype": "int8",
+    "pl_log2scale": 3,
+    "add_log2scale": 2,
+    "output_log2scale": 2,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_12_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_11_add",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_11/add",
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_11_add",
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 5,
     "load_bias": true,
@@ -1772,18 +2067,22 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_12/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_12_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/depthwise/depthwise_Fold",
-      "BoxPredictor_0/BoxEncodingPredictor/Conv2D_Fold",
-      "BoxPredictor_0/ClassPredictor/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_depthwise_depthwise_Fold",
+      "BoxPredictor_0_BoxEncodingPredictor_Conv2D_Fold",
+      "BoxPredictor_0_ClassPredictor_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_13_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 5,
     "bias_shift": 5,
     "load_bias": true,
@@ -1816,16 +2115,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_0_BoxEncodingPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -1858,16 +2161,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_0/Reshape"
+      "BoxPredictor_0_Reshape"
     ]
   },
   {
     "name": "BoxPredictor_0_ClassPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 9,
     "bias_shift": 7,
     "load_bias": true,
@@ -1900,16 +2207,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_0/Reshape_1"
+      "BoxPredictor_0_Reshape_1"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
     "output_shift": 9,
     "bias_shift": 8,
     "load_bias": true,
@@ -1942,35 +2253,73 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_add"
     ]
   },
   {
     "name": "BoxPredictor_0_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      1,
+      4
+    ],
+    "input_shape": [
+      10,
+      10,
+      12
+    ],
+    "output_shape": [
+      300,
+      1,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 3,
     "prev_layer": [
-      "BoxPredictor_0/BoxEncodingPredictor/Conv2D_Fold"
+      "BoxPredictor_0_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat"
+      "endpoint"
     ]
   },
   {
     "name": "BoxPredictor_0_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      10,
+      10,
+      6
+    ],
+    "output_shape": [
+      300,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 2,
     "prev_layer": [
-      "BoxPredictor_0/ClassPredictor/Conv2D_Fold"
+      "BoxPredictor_0_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat_1"
+      "endpoint"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_14_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 3,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -2003,16 +2352,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_14_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 5,
     "bias_shift": 4,
     "load_bias": true,
@@ -2045,16 +2398,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_14_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
     "output_shift": 9,
     "bias_shift": 7,
     "load_bias": true,
@@ -2087,27 +2444,46 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_14_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 1000,
+    "input_channel_num": 40,
+    "input_size": {
+      "height": 5,
+      "width": 5
+    },
+    "dtype": "int8",
+    "pl_log2scale": 3,
+    "add_log2scale": 3,
+    "output_log2scale": 3,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_14_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_13/project/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/expand/Conv2D_Fold",
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_expand_Conv2D_Fold",
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_15_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 3,
+    "weight_log2scale": 9,
+    "bias_log2scale": 7,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 5,
     "load_bias": true,
@@ -2140,16 +2516,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_15_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 5,
     "bias_shift": 4,
     "load_bias": true,
@@ -2182,16 +2562,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_15_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -2224,26 +2608,45 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_add"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_15_add",
+    "operation": "add",
+    "activation_type": "None",
+    "size": 1000,
+    "input_channel_num": 40,
+    "input_size": {
+      "height": 5,
+      "width": 5
+    },
+    "dtype": "int8",
+    "pl_log2scale": 3,
+    "add_log2scale": 3,
+    "output_log2scale": 2,
+    "output_shift_bit": -1,
+    "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_15_project_Conv2D_Fold",
+    "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_14_add",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_14/add",
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_14_add",
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_16/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_16_expand_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_16_expand_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 6,
     "load_bias": true,
@@ -2276,16 +2679,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_15/add"
+      "FeatureExtractor_MobilenetV2_expanded_conv_15_add"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_16/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_16_depthwise_depthwise_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_16_depthwise_depthwise_Fold",
     "operation": "dwconv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 4,
     "bias_shift": 4,
     "load_bias": true,
@@ -2318,16 +2725,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_16/expand/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_16_expand_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_16/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_16_project_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_expanded_conv_16_project_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
     "output_shift": 9,
     "bias_shift": 8,
     "load_bias": true,
@@ -2360,16 +2771,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_16/depthwise/depthwise_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_16_depthwise_depthwise_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/Conv_1/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 3,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 5,
     "load_bias": true,
@@ -2402,18 +2817,22 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/expanded_conv_16/project/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_expanded_conv_16_project_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_2_1x1_64/Conv2D_Fold",
-      "BoxPredictor_1/BoxEncodingPredictor/Conv2D_Fold",
-      "BoxPredictor_1/ClassPredictor/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_2_1x1_64_Conv2D_Fold",
+      "BoxPredictor_1_BoxEncodingPredictor_Conv2D_Fold",
+      "BoxPredictor_1_ClassPredictor_Conv2D_Fold"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_2_1x1_64_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 8,
     "load_bias": true,
@@ -2446,16 +2865,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/Conv_1/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_128/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_1_BoxEncodingPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
     "output_shift": 10,
     "bias_shift": 8,
     "load_bias": true,
@@ -2488,16 +2911,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/Conv_1/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_1/Reshape"
+      "BoxPredictor_1_Reshape"
     ]
   },
   {
     "name": "BoxPredictor_1_ClassPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
     "output_shift": 11,
     "bias_shift": 8,
     "load_bias": true,
@@ -2530,16 +2957,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/Conv_1/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_1/Reshape_1"
+      "BoxPredictor_1_Reshape_1"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 8,
     "load_bias": true,
@@ -2572,36 +3003,74 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_2_1x1_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_2_1x1_64_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_3_1x1_32/Conv2D_Fold",
-      "BoxPredictor_2/BoxEncodingPredictor/Conv2D_Fold",
-      "BoxPredictor_2/ClassPredictor/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_3_1x1_32_Conv2D_Fold",
+      "BoxPredictor_2_BoxEncodingPredictor_Conv2D_Fold",
+      "BoxPredictor_2_ClassPredictor_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_1_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      1,
+      4
+    ],
+    "input_shape": [
+      5,
+      5,
+      24
+    ],
+    "output_shape": [
+      150,
+      1,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
     "prev_layer": [
-      "BoxPredictor_1/BoxEncodingPredictor/Conv2D_Fold"
+      "BoxPredictor_1_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat"
+      "endpoint"
     ]
   },
   {
     "name": "BoxPredictor_1_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      5,
+      5,
+      12
+    ],
+    "output_shape": [
+      150,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 1,
     "prev_layer": [
-      "BoxPredictor_1/ClassPredictor/Conv2D_Fold"
+      "BoxPredictor_1_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat_1"
+      "endpoint"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_3_1x1_32_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 7,
     "load_bias": true,
@@ -2634,16 +3103,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_128/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_3_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_2_BoxEncodingPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 9,
     "bias_shift": 8,
     "load_bias": true,
@@ -2676,16 +3149,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_128/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_2/Reshape"
+      "BoxPredictor_2_Reshape"
     ]
   },
   {
     "name": "BoxPredictor_2_ClassPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
     "output_shift": 11,
     "bias_shift": 8,
     "load_bias": true,
@@ -2718,16 +3195,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_2_3x3_s2_128/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_2/Reshape_1"
+      "BoxPredictor_2_Reshape_1"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 8,
     "load_bias": true,
@@ -2760,36 +3241,74 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_3_1x1_32/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_3_1x1_32_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_4_1x1_32/Conv2D_Fold",
-      "BoxPredictor_3/BoxEncodingPredictor/Conv2D_Fold",
-      "BoxPredictor_3/ClassPredictor/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_4_1x1_32_Conv2D_Fold",
+      "BoxPredictor_3_BoxEncodingPredictor_Conv2D_Fold",
+      "BoxPredictor_3_ClassPredictor_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_2_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      1,
+      4
+    ],
+    "input_shape": [
+      3,
+      3,
+      24
+    ],
+    "output_shape": [
+      54,
+      1,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
     "prev_layer": [
-      "BoxPredictor_2/BoxEncodingPredictor/Conv2D_Fold"
+      "BoxPredictor_2_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat"
+      "endpoint"
     ]
   },
   {
     "name": "BoxPredictor_2_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      3,
+      3,
+      12
+    ],
+    "output_shape": [
+      54,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 1,
     "prev_layer": [
-      "BoxPredictor_2/ClassPredictor/Conv2D_Fold"
+      "BoxPredictor_2_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat_1"
+      "endpoint"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_4_1x1_32_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
     "output_shift": 5,
     "bias_shift": 5,
     "load_bias": true,
@@ -2822,16 +3341,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_3_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_4_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_3_BoxEncodingPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 5,
     "output_shift": 7,
     "bias_shift": 7,
     "load_bias": true,
@@ -2864,16 +3387,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_3_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_3/Reshape"
+      "BoxPredictor_3_Reshape"
     ]
   },
   {
     "name": "BoxPredictor_3_ClassPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -2906,16 +3433,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_3_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_3/Reshape_1"
+      "BoxPredictor_3_Reshape_1"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 6,
     "load_bias": true,
@@ -2948,36 +3479,74 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_4_1x1_32/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_4_1x1_32_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_5_1x1_16/Conv2D_Fold",
-      "BoxPredictor_4/BoxEncodingPredictor/Conv2D_Fold",
-      "BoxPredictor_4/ClassPredictor/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_5_1x1_16_Conv2D_Fold",
+      "BoxPredictor_4_BoxEncodingPredictor_Conv2D_Fold",
+      "BoxPredictor_4_ClassPredictor_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_3_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      1,
+      4
+    ],
+    "input_shape": [
+      2,
+      2,
+      24
+    ],
+    "output_shape": [
+      24,
+      1,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 5,
     "prev_layer": [
-      "BoxPredictor_3/BoxEncodingPredictor/Conv2D_Fold"
+      "BoxPredictor_3_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat"
+      "endpoint"
     ]
   },
   {
     "name": "BoxPredictor_3_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      2,
+      2,
+      12
+    ],
+    "output_shape": [
+      24,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 2,
     "prev_layer": [
-      "BoxPredictor_3/ClassPredictor/Conv2D_Fold"
+      "BoxPredictor_3_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat_1"
+      "endpoint"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_5_1x1_16_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 7,
     "load_bias": true,
@@ -3010,16 +3579,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_4_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_5_3x3_s2_32/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_5_3x3_s2_32_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_4_BoxEncodingPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 8,
     "bias_shift": 7,
     "load_bias": true,
@@ -3052,16 +3625,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_4_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_4/Reshape"
+      "BoxPredictor_4_Reshape"
     ]
   },
   {
     "name": "BoxPredictor_4_ClassPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 9,
     "bias_shift": 7,
     "load_bias": true,
@@ -3094,16 +3671,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_4_3x3_s2_64/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_4/Reshape_1"
+      "BoxPredictor_4_Reshape_1"
     ]
   },
   {
     "name": "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_5_3x3_s2_32_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
     "output_shift": 7,
     "bias_shift": 6,
     "load_bias": true,
@@ -3136,35 +3717,73 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_1_Conv2d_5_1x1_16/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_5_1x1_16_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_5/BoxEncodingPredictor/Conv2D_Fold",
-      "BoxPredictor_5/ClassPredictor/Conv2D_Fold"
+      "BoxPredictor_5_BoxEncodingPredictor_Conv2D_Fold",
+      "BoxPredictor_5_ClassPredictor_Conv2D_Fold"
     ]
   },
   {
     "name": "BoxPredictor_4_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      1,
+      4
+    ],
+    "input_shape": [
+      1,
+      1,
+      24
+    ],
+    "output_shape": [
+      6,
+      1,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
     "prev_layer": [
-      "BoxPredictor_4/BoxEncodingPredictor/Conv2D_Fold"
+      "BoxPredictor_4_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat"
+      "endpoint"
     ]
   },
   {
     "name": "BoxPredictor_4_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      1,
+      1,
+      12
+    ],
+    "output_shape": [
+      6,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 2,
     "prev_layer": [
-      "BoxPredictor_4/ClassPredictor/Conv2D_Fold"
+      "BoxPredictor_4_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
-      "concat_1"
+      "endpoint"
     ]
   },
   {
     "name": "BoxPredictor_5_BoxEncodingPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 5,
     "output_shift": 6,
     "bias_shift": 6,
     "load_bias": true,
@@ -3197,16 +3816,20 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_5_3x3_s2_32/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_5_3x3_s2_32_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_5/Reshape"
+      "BoxPredictor_5_Reshape"
     ]
   },
   {
     "name": "BoxPredictor_5_ClassPredictor_Conv2D_Fold",
     "operation": "conv",
     "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
     "output_shift": 8,
     "bias_shift": 6,
     "load_bias": true,
@@ -3239,30 +3862,34 @@
     "weight_dtype": "int8",
     "bias_dtype": "int8",
     "prev_layer": [
-      "FeatureExtractor/MobilenetV2/layer_19_2_Conv2d_5_3x3_s2_32/Conv2D_Fold"
+      "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_5_3x3_s2_32_Conv2D_Fold"
     ],
     "next_layer": [
-      "BoxPredictor_5/Reshape_1"
+      "BoxPredictor_5_Reshape_1"
     ]
   },
   {
     "name": "BoxPredictor_5_Reshape",
-    "prev_layer": [
-      "BoxPredictor_5/BoxEncodingPredictor/Conv2D_Fold"
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      1,
+      4
     ],
-    "next_layer": [
-      "concat"
-    ]
-  },
-  {
-    "name": "concat",
+    "input_shape": [
+      1,
+      1,
+      24
+    ],
+    "output_shape": [
+      6,
+      1,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 5,
     "prev_layer": [
-      "BoxPredictor_0/Reshape",
-      "BoxPredictor_1/Reshape",
-      "BoxPredictor_2/Reshape",
-      "BoxPredictor_3/Reshape",
-      "BoxPredictor_4/Reshape",
-      "BoxPredictor_5/Reshape"
+      "BoxPredictor_5_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
       "endpoint"
@@ -3270,22 +3897,24 @@
   },
   {
     "name": "BoxPredictor_5_Reshape_1",
-    "prev_layer": [
-      "BoxPredictor_5/ClassPredictor/Conv2D_Fold"
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
     ],
-    "next_layer": [
-      "concat_1"
-    ]
-  },
-  {
-    "name": "concat_1",
+    "input_shape": [
+      1,
+      1,
+      12
+    ],
+    "output_shape": [
+      6,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 2,
     "prev_layer": [
-      "BoxPredictor_0/Reshape_1",
-      "BoxPredictor_1/Reshape_1",
-      "BoxPredictor_2/Reshape_1",
-      "BoxPredictor_3/Reshape_1",
-      "BoxPredictor_4/Reshape_1",
-      "BoxPredictor_5/Reshape_1"
+      "BoxPredictor_5_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
       "endpoint"
