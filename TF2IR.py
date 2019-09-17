@@ -197,8 +197,8 @@ class TF2IR(object):
                 layer['input_channel_num'] = cin
                 layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
                 layer['dtype'] = 'int8'
-                layer['pl_log2scale'] = x_log2scale
-                layer['add_log2scale'] = y_log2scale
+                layer['pl_log2scale'] = layer['pl_shiftbit'] = x_log2scale
+                layer['add_log2scale'] = layer['add_shiftbit'] = y_log2scale
                 layer['output_log2scale'] = ofm_log2scale
                 layer['output_shift_bit'] = ofm_shift
                 layer['pl_name'] = x_conv_op.name.replace('/', '_')
@@ -258,7 +258,7 @@ class TF2IR(object):
             
             # fill the prev_layers information
             prev_layers = info_prev_layers[curr_op.name]
-            layer['prev_layer'] = [s.replace('/','_') for s in prev_layers]
+            layer['previous_layer'] = [s.replace('/','_') for s in prev_layers]
 
             # init the next_layers list 
             next_layers = []

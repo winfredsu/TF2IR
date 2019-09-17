@@ -32,7 +32,7 @@ def get_swap_area(input_path, output_path):
         # find the number of visited tensors which have not been consumed
         maintained_tensor_count[i] = sum([visited_tensors[t]!=0 for t in list(visited_tensors.keys())])
         # consume the input tensor(s)
-        for prev in layer['prev_layer']:
+        for prev in layer['previous_layer']:
             visited_tensors[prev] -= 1
 
     print('number of layers =', len(layers))

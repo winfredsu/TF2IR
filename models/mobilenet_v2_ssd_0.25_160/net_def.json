@@ -38,7 +38,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "input"
     ],
     "next_layer": [
@@ -85,7 +85,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold"
     ],
     "next_layer": [
@@ -131,7 +131,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -149,12 +149,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 4,
+    "pl_shiftbit": 4,
     "add_log2scale": 4,
+    "add_shiftbit": 4,
     "output_log2scale": 3,
     "output_shift_bit": -1,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_Conv_Conv2D_Fold",
       "FeatureExtractor_MobilenetV2_expanded_conv_project_Conv2D_Fold"
     ],
@@ -201,7 +203,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_add"
     ],
     "next_layer": [
@@ -247,7 +249,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_1_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -293,7 +295,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_1_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -340,7 +342,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold"
     ],
     "next_layer": [
@@ -386,7 +388,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_2_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -432,7 +434,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_2_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -450,12 +452,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 2,
+    "pl_shiftbit": 2,
     "add_log2scale": 2,
+    "add_shiftbit": 2,
     "output_log2scale": 1,
     "output_shift_bit": -1,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_2_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
       "FeatureExtractor_MobilenetV2_expanded_conv_2_project_Conv2D_Fold"
     ],
@@ -502,7 +506,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_2_add"
     ],
     "next_layer": [
@@ -548,7 +552,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_3_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -594,7 +598,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_3_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -641,7 +645,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold"
     ],
     "next_layer": [
@@ -687,7 +691,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_4_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -733,7 +737,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_4_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -751,12 +755,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 2,
+    "pl_shiftbit": 2,
     "add_log2scale": 2,
+    "add_shiftbit": 2,
     "output_log2scale": 2,
     "output_shift_bit": 0,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_4_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
       "FeatureExtractor_MobilenetV2_expanded_conv_4_project_Conv2D_Fold"
     ],
@@ -804,7 +810,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_4_add"
     ],
     "next_layer": [
@@ -850,7 +856,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_5_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -896,7 +902,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_5_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -914,12 +920,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 2,
+    "pl_shiftbit": 2,
     "add_log2scale": 2,
+    "add_shiftbit": 2,
     "output_log2scale": 1,
     "output_shift_bit": -1,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_5_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_4_add",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_4_add",
       "FeatureExtractor_MobilenetV2_expanded_conv_5_project_Conv2D_Fold"
     ],
@@ -966,7 +974,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_5_add"
     ],
     "next_layer": [
@@ -1012,7 +1020,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_6_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1058,7 +1066,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_6_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -1105,7 +1113,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1151,7 +1159,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_7_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1197,7 +1205,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_7_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -1215,12 +1223,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 3,
+    "pl_shiftbit": 3,
     "add_log2scale": 1,
+    "add_shiftbit": 1,
     "output_log2scale": 1,
     "output_shift_bit": 0,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_7_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
       "FeatureExtractor_MobilenetV2_expanded_conv_7_project_Conv2D_Fold"
     ],
@@ -1268,7 +1278,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_7_add"
     ],
     "next_layer": [
@@ -1314,7 +1324,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_8_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1360,7 +1370,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_8_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -1378,12 +1388,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 3,
+    "pl_shiftbit": 3,
     "add_log2scale": 1,
+    "add_shiftbit": 1,
     "output_log2scale": 1,
     "output_shift_bit": 0,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_8_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_7_add",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_7_add",
       "FeatureExtractor_MobilenetV2_expanded_conv_8_project_Conv2D_Fold"
     ],
@@ -1431,7 +1443,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_8_add"
     ],
     "next_layer": [
@@ -1477,7 +1489,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_9_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1523,7 +1535,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_9_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -1541,12 +1553,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 2,
+    "pl_shiftbit": 2,
     "add_log2scale": 1,
+    "add_shiftbit": 1,
     "output_log2scale": 1,
     "output_shift_bit": 0,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_9_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_8_add",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_8_add",
       "FeatureExtractor_MobilenetV2_expanded_conv_9_project_Conv2D_Fold"
     ],
@@ -1593,7 +1607,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_9_add"
     ],
     "next_layer": [
@@ -1639,7 +1653,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_10_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1685,7 +1699,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_10_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -1732,7 +1746,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1778,7 +1792,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_11_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1824,7 +1838,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_11_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -1842,12 +1856,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 3,
+    "pl_shiftbit": 3,
     "add_log2scale": 2,
+    "add_shiftbit": 2,
     "output_log2scale": 2,
     "output_shift_bit": 0,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_11_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
       "FeatureExtractor_MobilenetV2_expanded_conv_11_project_Conv2D_Fold"
     ],
@@ -1895,7 +1911,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_11_add"
     ],
     "next_layer": [
@@ -1941,7 +1957,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_12_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -1987,7 +2003,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_12_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -2005,12 +2021,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 3,
+    "pl_shiftbit": 3,
     "add_log2scale": 2,
+    "add_shiftbit": 2,
     "output_log2scale": 2,
     "output_shift_bit": 0,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_12_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_11_add",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_11_add",
       "FeatureExtractor_MobilenetV2_expanded_conv_12_project_Conv2D_Fold"
     ],
@@ -2057,7 +2075,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_12_add"
     ],
     "next_layer": [
@@ -2105,7 +2123,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2130,7 +2148,7 @@
     ],
     "dtype": "int8",
     "log2scale": 2,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_0_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2176,7 +2194,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2203,7 +2221,7 @@
     ],
     "dtype": "int8",
     "log2scale": 3,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_0_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2249,7 +2267,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2295,7 +2313,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_13_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -2342,7 +2360,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2388,7 +2406,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_14_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2434,7 +2452,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_14_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -2452,12 +2470,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 3,
+    "pl_shiftbit": 3,
     "add_log2scale": 3,
+    "add_shiftbit": 3,
     "output_log2scale": 3,
     "output_shift_bit": 0,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_14_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
       "FeatureExtractor_MobilenetV2_expanded_conv_14_project_Conv2D_Fold"
     ],
@@ -2505,7 +2525,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_14_add"
     ],
     "next_layer": [
@@ -2551,7 +2571,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_15_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2597,7 +2617,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_15_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -2615,12 +2635,14 @@
     },
     "dtype": "int8",
     "pl_log2scale": 3,
+    "pl_shiftbit": 3,
     "add_log2scale": 3,
+    "add_shiftbit": 3,
     "output_log2scale": 2,
     "output_shift_bit": -1,
     "pl_name": "FeatureExtractor_MobilenetV2_expanded_conv_15_project_Conv2D_Fold",
     "add_name": "FeatureExtractor_MobilenetV2_expanded_conv_14_add",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_14_add",
       "FeatureExtractor_MobilenetV2_expanded_conv_15_project_Conv2D_Fold"
     ],
@@ -2667,7 +2689,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_15_add"
     ],
     "next_layer": [
@@ -2713,7 +2735,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_16_expand_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2759,7 +2781,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_16_depthwise_depthwise_Fold"
     ],
     "next_layer": [
@@ -2805,7 +2827,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_expanded_conv_16_project_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2853,7 +2875,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2878,7 +2900,7 @@
     ],
     "dtype": "int8",
     "log2scale": 1,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_1_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2924,7 +2946,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2951,7 +2973,7 @@
     ],
     "dtype": "int8",
     "log2scale": 4,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_1_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -2997,7 +3019,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_Conv_1_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3043,7 +3065,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_2_1x1_64_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3091,7 +3113,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3116,7 +3138,7 @@
     ],
     "dtype": "int8",
     "log2scale": 1,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_2_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3162,7 +3184,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3189,7 +3211,7 @@
     ],
     "dtype": "int8",
     "log2scale": 4,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_2_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3235,7 +3257,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_2_3x3_s2_128_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3281,7 +3303,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_3_1x1_32_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3329,7 +3351,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3354,7 +3376,7 @@
     ],
     "dtype": "int8",
     "log2scale": 2,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_3_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3400,7 +3422,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3427,7 +3449,7 @@
     ],
     "dtype": "int8",
     "log2scale": 5,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_3_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3473,7 +3495,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_3_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3519,7 +3541,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_4_1x1_32_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3567,7 +3589,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3592,7 +3614,7 @@
     ],
     "dtype": "int8",
     "log2scale": 2,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_4_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3638,7 +3660,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3665,7 +3687,7 @@
     ],
     "dtype": "int8",
     "log2scale": 4,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_4_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3711,7 +3733,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_4_3x3_s2_64_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3757,7 +3779,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_1_Conv2d_5_1x1_16_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3804,7 +3826,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_5_3x3_s2_32_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3829,7 +3851,7 @@
     ],
     "dtype": "int8",
     "log2scale": 2,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_5_ClassPredictor_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3875,7 +3897,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "FeatureExtractor_MobilenetV2_layer_19_2_Conv2d_5_3x3_s2_32_Conv2D_Fold"
     ],
     "next_layer": [
@@ -3902,7 +3924,7 @@
     ],
     "dtype": "int8",
     "log2scale": 5,
-    "prev_layer": [
+    "previous_layer": [
       "BoxPredictor_5_BoxEncodingPredictor_Conv2D_Fold"
     ],
     "next_layer": [
