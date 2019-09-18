@@ -7,10 +7,28 @@
 - `utils` 存放从IR中抽取硬件相关信息的脚本。
 
 ## 2. 使用方法
+`python TF2IR -i path_to_graph.pb -o output_dir --image_height 160 --image_width 160 --input_tensor_name normalized_input_image_tensor:0 --end_points reshape:0 reshape:1 reshape:2 --test_image test.jpg`
+- `-i`: 输入frozen graph路径
+- `-o`: 输出路径(应为directory)
+- `--image_height`: 图片高度
+- `--image_width`: 图片宽度
+- `--input_tensor_name`: 推理图中的输入Tensor名称，例如：`input:0`
+- `--end_points`: 推理图的结束Tensor名称，例如：对于SSD类检测网络，将各检测头的`Reshape:0`作为结束点，提供给SSD使用。
+- `--test_image`: 测试图片路径，用于生成每层的输入输出张量
+
+## 3. 支持的图结构及主要限制
+- 目前所有input/w/b/output均为int8格式，采用power-of-2范围的对称量化，即将原tensor取power-of-2范围后，均匀放缩到[-128, 127]范围内。
+- 推理图中不能出现Batchnorm单元，所有Batchnorm在训练时都应该Fold进权重。
+- CONV/DWCONV在TensorFlow Graph中的结构应为如下格式。其中weight和bias均来源于Fake Quant单元；输出经过Relu6激活或无激活函数；最终输出由Fake Quant单元得到。
+![quantized_conv_block](./doc/quantized_conv_block.png)
+- ADD在TensorFlow Graph中的结构应为如下格式。其中x和y来自前序层的输出Fake Quant单元；输出经过Relu6激活或无激活函数；最终输出由Fake Quant单元得到。
+![quantized_add_block](./doc/quantized_add_block.png)
+- 该工具能够自动识别并跳过图中的Identity单元。
+- 在TensorFlow的推理过程中，输入是[-1,1]范围的浮点数；在输出的IR中，第一层的输入log2(scale)信息已被用于移位信息的计算，因此网络的输入应为[-128,127]的整数。
 
 
-## 3. IR的格式定义
-### 3.1. 公用定义
+## 4. IR的格式定义
+### 4.1. 公用定义
 - `previous_layer` 存放前序层的列表，输入张量统一用`input`表示；
 - `next_layer` 存放后续层的列表，网络结尾统一用`endpoint`表示；
 - 权重及测试张量命名规则为`layername_weight/bias/input/output/add/pl.npy`, 存储格式为：
@@ -19,7 +37,7 @@
     - `bias`: C
     - `feature map`: HWC
 
-### 3.2. 支持的算子及其关键key定义
+### 4.2. 支持的算子及其关键key定义
 #### CONV/DWCONV
 - `operation`: `conv`代表二维卷积，`dwconv`代表深度可分离卷积
 - `activation_type`: 卷积操作内的激活类型，可取值`Relu6`, `None`
@@ -69,7 +87,7 @@
     "output_dtype": "int8",
     "weight_dtype": "int8",
     "bias_dtype": "int8",
-    "prev_layer": [
+    "previous_layer": [
       "input"
     ],
     "next_layer": [
