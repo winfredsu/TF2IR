@@ -168,3 +168,20 @@
   }
 ```
 
+## 5. 解析原理
+### 5.1 找到input tensor
+根据input_tensor_name找到input tensor
+
+### 5.2 维护tensors_ready, ops_discovered和info_prev_layers三个集合
+- `tensors_ready`: 已处理完的tensor
+- `ops_discovered`: 每处理完一个tensor之后，寻找其real consumer，并加入ops_discovered. 
+- `info_prev_layers`: 每处理完一个layer后，将其consumer的previous_layer标注为该layer
+
+### 5.3 对图进行有依赖的DFS
+从ops_discovered队列末尾向前，直到找到一个op, 其dependency均已出现在tensors_ready之中。从ops_discovered中取出这个op.
+
+### 5.4 根据不同的op类型，提取layer信息
+以卷积算子为例，首先找到卷积层真正的ifm/ofm/w/b (fake quant op), 再从卷积算子中提取卷积参数。此后对ifm/ofm/w/b tensor进行求值，并得到中间feature map的size信息。然后从各fake quant op中提取量化宽度和scale信息，并计算bias和输出的移位信息，同时根据量化和scale信息换算出量化后的tensor值。 最终，将layer信息存入字典，并保存量化过的tensor文件。
+
+### 5.5 处理previous/next信息
+首先将该层的输出tensor加入到tensors_ready中；然后从info_prev_layers中找到该层的前序层信息，并加入layer字典中；此后，若该层的输出tensor非结束点，找到其所有真正的consumer, 并加入next_layer信息，更新ops_discovered和info_prev_layer. 
