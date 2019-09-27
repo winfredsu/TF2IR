@@ -31,7 +31,8 @@ class TF2IR(object):
         self.input_tensor_name = input_tensor_name
         self.end_points = end_points
         self.net_def = {'layers': []}
-        self.test_img = np.array(PIL.Image.open(test_image).resize(self.img_size)).astype(np.float)/128-1
+        # note that PIL.resize() requires [W,H] as param
+        self.test_img = np.array(PIL.Image.open(test_image).resize([self.img_size[1], self.img_size[0]])).astype(np.float)/128-1
         self.test_img = self.test_img.reshape(1,self.img_size[0],self.img_size[1],3)
 
         self.output_param_path = os.path.join(output_path, 'params')            
