@@ -647,6 +647,12 @@ class TF2IR(object):
             pads_along_h = max( (ho-1)*s+k-hi, 0 )
             pads_top = pads_along_h // 2
             pads_bot = pads_along_h - pads_top
+            
+            Note 1:
+            If pads_along_h/w is odd, pads_bot(right) is larger than pads_top(left) by one. 
+            Note 2:
+            In the above equation the max(x,0) is important when kernel size is less than 
+            the stride. In this case, all pads are 0 (do not use negative padding). 
         """
         # calculate padding sizes
         if padding == 'VALID':
@@ -658,6 +664,7 @@ class TF2IR(object):
             bp = int(np.ceil(pads_along_h/2))
             lp = int(np.floor(pads_along_w/2))
             rp = int(np.ceil(pads_along_w/2))
+            print(tp, bp, lp, rp)
             assert tp>=0 and bp>=0 and lp>=0 and rp>=0
             return [tp,bp,lp,rp]
         else:
