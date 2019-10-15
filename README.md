@@ -168,3 +168,52 @@
   }
 ```
 
+#### AVGPOOL
+- `dtype`: 数据类型，目前都应为`int8`
+- `kernel_size`: average pooling范围参数
+- `input_log2scale`, `output_log2scale`: 输入和输出的scale, 由于average pooling操作会改变tensor范围，因此二者可能不同（`input_log2scale`小于`output_log2scale`)
+- `input_pre_ls`: 由于存在上述问题，可将输入的整数提前左移后求平均再取整，该键定义了“提前左移”的位移量
+- `input_size`, `stride`, `padding`, `kernel_size`与`output_size`的关系：
+  
+
+``` json
+  {
+    "name": "resnet_v1_18/AvgPool",
+    "operation": "avg_pool",
+    "input_channel_num": 64,
+    "input_size": {
+      "height": 6,
+      "width": 6
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 6,
+      "width": 6
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 1,
+      "left": 0,
+      "right": 1
+    },
+    "output_channel_num": 64,
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_log2scale": 5,
+    "output_dtype": "int8",
+    "input_pre_ls": 1, 
+    "previous_layer": [
+      "some_layers"
+    ],
+    "next_layer": [
+      "FeatureExtractor_MobilenetV2_expanded_conv_add"
+    ]
+  }
+```
