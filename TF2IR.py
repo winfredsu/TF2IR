@@ -12,7 +12,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
 
 VALID_ACTS = ['Relu6']
 VALID_CONV_OPS = ['Conv2D', 'DepthwiseConv2dNative']
-VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'AvgPool']
+VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'AvgPool', 'MaxPool']
 
 class TF2IR(object):
     """
@@ -247,7 +247,7 @@ class TF2IR(object):
                 # assign output_tensor
                 output_tensor = curr_op.outputs[0]
 
-            elif curr_op.type == 'AvgPool':
+            elif curr_op.type in ['AvgPool', 'MaxPool']:
                 # get ifm/ofm ops
                 ifm_op = self.__get_pool_ifm_op(curr_op)
                 ofm_op = self.__get_pool_ofm_op(curr_op)
@@ -363,7 +363,7 @@ class TF2IR(object):
             return [self.__get_real_producer_tensor(op.inputs[0]), self.__get_real_producer_tensor(op.inputs[1])]
         elif op.type == 'Reshape':
             return [self.__get_real_producer_tensor(op.inputs[0])]
-        elif op.type == 'AvgPool':
+        elif op.type in ['AvgPool', 'MaxPool']:
             return [self.__get_real_producer_tensor(op.inputs[0])]
         elif op.type == 'ConcatV2':
             n = op.get_attr('N')
@@ -592,13 +592,13 @@ class TF2IR(object):
         return act_type, ofm_quant_op 
 
     def __get_pool_ifm_op(self, op):
-        assert(op.type == 'AvgPool')
+        assert(op.type in ['AvgPool', 'MaxPool'])
         op_ifm = self.__get_real_producer(op.inputs[0])
         assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
         return op_ifm
 
     def __get_pool_ofm_op(self, op):
-        assert (op.type == 'AvgPool')
+        assert(op.type in ['AvgPool', 'MaxPool'])
         ops_found = self.__get_real_consumers(op.outputs[0])
         assert len(ops_found) == 1
         op_ofm = ops_found[0]
