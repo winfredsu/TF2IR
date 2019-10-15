@@ -3,7 +3,7 @@ import numpy as np
 
 # def input_4_stride_2_kernel_1():
 """
-input: (4x1) [1.0, 2.0, 3.0, 4.0]
+input: (4x1) [1.0, 3.0, 5.0, 7.0]
 kernel: (1x1) [1.0]
 stride: 2
 output: (2x1) 

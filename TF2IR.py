@@ -658,13 +658,12 @@ class TF2IR(object):
         if padding == 'VALID':
             return [0,0,0,0]
         elif padding == 'SAME':
-            pads_along_h = (ofm_size[0]-1)*strides[0]+kernel_size[0]-ifm_size[0]
-            pads_along_w = (ofm_size[1]-1)*strides[1]+kernel_size[1]-ifm_size[1]
+            pads_along_h = max((ofm_size[0]-1)*strides[0]+kernel_size[0]-ifm_size[0],0)
+            pads_along_w = max((ofm_size[1]-1)*strides[1]+kernel_size[1]-ifm_size[1],0)
             tp = int(np.floor(pads_along_h/2))
             bp = int(np.ceil(pads_along_h/2))
             lp = int(np.floor(pads_along_w/2))
             rp = int(np.ceil(pads_along_w/2))
-            print(tp, bp, lp, rp)
             assert tp>=0 and bp>=0 and lp>=0 and rp>=0
             return [tp,bp,lp,rp]
         else:
