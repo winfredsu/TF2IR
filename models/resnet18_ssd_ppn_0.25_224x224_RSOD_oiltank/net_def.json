@@ -1,0 +1,2903 @@
+[
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 7,
+    "weight_log2scale": 12,
+    "bias_log2scale": 7,
+    "output_log2scale": 4,
+    "output_shift": 15,
+    "bias_shift": 12,
+    "load_bias": true,
+    "input_channel_num": 3,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 224,
+      "width": 224
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 1,
+      "left": 0,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "input"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 6,
+    "output_log2scale": 3,
+    "output_shift": 7,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 64,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 3,
+    "add_shiftbit": 3,
+    "output_log2scale": 4,
+    "output_shift_bit": 1,
+    "pl_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_Conv_Conv2D_Fold",
+    "add_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_Conv_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 7,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 6,
+    "output_log2scale": 3,
+    "output_shift": 7,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 64,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 3,
+    "add_shiftbit": 3,
+    "output_log2scale": 4,
+    "output_shift_bit": 1,
+    "pl_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_add",
+    "add_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_1_bottleneck_v1_add",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_MaxPool2D_MaxPool"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_MaxPool2D_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 64,
+    "input_size": {
+      "height": 112,
+      "width": 112
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 64,
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_MaxPool2D_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 128,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 128,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block1_MaxPool2D_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 128,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 128,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 128,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 128,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_add",
+    "add_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_1_bottleneck_v1_add",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_MaxPool2D_MaxPool"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_MaxPool2D_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 128,
+    "input_size": {
+      "height": 56,
+      "width": 56
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 128,
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 128,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_MaxPool2D_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 128,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block2_MaxPool2D_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 256,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 256,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 3,
+    "add_shiftbit": 3,
+    "output_log2scale": 4,
+    "output_shift_bit": 1,
+    "pl_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_add",
+    "add_name": "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_1_bottleneck_v1_add",
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 9,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 1024,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_resnet_v1_18_block3_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_1_MaxPool"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_1_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 1024,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 1024,
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_0_2x2_MaxPool",
+      "WeightSharedConvolutionalBoxPredictor_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+      "WeightSharedConvolutionalBoxPredictor_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_ClassPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 11,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
+    "output_shift": 12,
+    "bias_shift": 11,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_1_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_ClassPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_ClassPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 3,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_Reshape_1"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      28,
+      28,
+      12
+    ],
+    "output_shape": [
+      4704,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 2,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_ClassPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
+    "output_shift": 11,
+    "bias_shift": 9,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_1_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_BoxPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_BoxPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 3,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 3,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 24,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_BoxPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_Reshape"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      4
+    ],
+    "input_shape": [
+      28,
+      28,
+      24
+    ],
+    "output_shape": [
+      4704,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 3,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_BoxPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_MaxPool2d_0_2x2_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 1024,
+    "input_size": {
+      "height": 28,
+      "width": 28
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 2,
+      "width": 2
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 1024,
+    "output_size": {
+      "height": 14,
+      "width": 14
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_Base_Conv2d_1x1_1024_1_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_1_2x2_MaxPool",
+      "WeightSharedConvolutionalBoxPredictor_1_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+      "WeightSharedConvolutionalBoxPredictor_1_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_1_ClassPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 12,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
+    "output_shift": 13,
+    "bias_shift": 12,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 14,
+      "width": 14
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 14,
+      "width": 14
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_0_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_ClassPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_1_ClassPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 3,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 14,
+      "width": 14
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 14,
+      "width": 14
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_Reshape_1"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_1_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      14,
+      14,
+      12
+    ],
+    "output_shape": [
+      1176,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 2,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_ClassPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_1_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 11,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 11,
+    "bias_shift": 11,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 14,
+      "width": 14
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 14,
+      "width": 14
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_0_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_BoxPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_1_BoxPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 24,
+    "input_size": {
+      "height": 14,
+      "width": 14
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 14,
+      "width": 14
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_BoxPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_Reshape"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_1_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      4
+    ],
+    "input_shape": [
+      14,
+      14,
+      24
+    ],
+    "output_shape": [
+      1176,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_1_BoxPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_MaxPool2d_1_2x2_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 1024,
+    "input_size": {
+      "height": 14,
+      "width": 14
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 2,
+      "width": 2
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 1024,
+    "output_size": {
+      "height": 7,
+      "width": 7
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_0_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_2_2x2_MaxPool",
+      "WeightSharedConvolutionalBoxPredictor_2_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+      "WeightSharedConvolutionalBoxPredictor_2_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_2_ClassPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 11,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 11,
+    "bias_shift": 11,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 7,
+      "width": 7
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 7,
+      "width": 7
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_1_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_ClassPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_2_ClassPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 10,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 7,
+      "width": 7
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 7,
+      "width": 7
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_Reshape_1"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_2_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      7,
+      7,
+      12
+    ],
+    "output_shape": [
+      294,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 2,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_ClassPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_2_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 11,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 11,
+    "bias_shift": 11,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 7,
+      "width": 7
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 7,
+      "width": 7
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_1_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_BoxPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_2_BoxPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 24,
+    "input_size": {
+      "height": 7,
+      "width": 7
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 7,
+      "width": 7
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_BoxPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_Reshape"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_2_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      4
+    ],
+    "input_shape": [
+      7,
+      7,
+      24
+    ],
+    "output_shape": [
+      294,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_2_BoxPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_MaxPool2d_2_2x2_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 1024,
+    "input_size": {
+      "height": 7,
+      "width": 7
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 2,
+      "width": 2
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 1,
+      "left": 0,
+      "right": 1
+    },
+    "output_channel_num": 1024,
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_1_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_3_2x2_MaxPool",
+      "WeightSharedConvolutionalBoxPredictor_3_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+      "WeightSharedConvolutionalBoxPredictor_3_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_3_ClassPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 11,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 11,
+    "bias_shift": 11,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_2_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_ClassPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_3_ClassPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_Reshape_1"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_3_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      4,
+      4,
+      12
+    ],
+    "output_shape": [
+      96,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 3,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_ClassPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_3_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 11,
+    "bias_log2scale": 4,
+    "output_log2scale": 5,
+    "output_shift": 10,
+    "bias_shift": 11,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_2_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_BoxPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_3_BoxPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 5,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 24,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_BoxPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_Reshape"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_3_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      4
+    ],
+    "input_shape": [
+      4,
+      4,
+      24
+    ],
+    "output_shape": [
+      96,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_3_BoxPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_MaxPool2d_3_2x2_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 1024,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 2,
+      "width": 2
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 1024,
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_2_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_4_2x2_MaxPool",
+      "WeightSharedConvolutionalBoxPredictor_4_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+      "WeightSharedConvolutionalBoxPredictor_4_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_4_ClassPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 11,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 11,
+    "bias_shift": 11,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_3_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_ClassPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_4_ClassPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_Reshape_1"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_4_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      2,
+      2,
+      12
+    ],
+    "output_shape": [
+      24,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 3,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_ClassPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_4_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 10,
+    "bias_shift": 10,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_3_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_BoxPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_4_BoxPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 24,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_BoxPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_Reshape"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_4_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      4
+    ],
+    "input_shape": [
+      2,
+      2,
+      24
+    ],
+    "output_shape": [
+      24,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_4_BoxPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "FeatureExtractor_resnet_v1_18_MaxPool2d_4_2x2_MaxPool",
+    "operation": "avg_pool",
+    "input_channel_num": 1024,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 2,
+      "width": 2
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 1024,
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 0,
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_3_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+      "WeightSharedConvolutionalBoxPredictor_5_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_5_ClassPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 10,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_4_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_ClassPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_5_ClassPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 2,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
+    "output_shift": 7,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_ClassPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_Reshape_1"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_5_Reshape_1",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      2
+    ],
+    "input_shape": [
+      1,
+      1,
+      12
+    ],
+    "output_shape": [
+      6,
+      2
+    ],
+    "dtype": "int8",
+    "log2scale": 3,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_ClassPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_5_BoxPredictionTower_conv2d_0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 11,
+    "bias_shift": 9,
+    "load_bias": true,
+    "input_channel_num": 1024,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "FeatureExtractor_resnet_v1_18_MaxPool2d_4_2x2_MaxPool"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_BoxPredictor_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_5_BoxPredictor_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 2,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 24,
+    "input_size": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_BoxPredictionTower_conv2d_0_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_Reshape"
+    ]
+  },
+  {
+    "name": "WeightSharedConvolutionalBoxPredictor_5_Reshape",
+    "operation": "reshape",
+    "reshape_param": [
+      -1,
+      4
+    ],
+    "input_shape": [
+      1,
+      1,
+      24
+    ],
+    "output_shape": [
+      6,
+      4
+    ],
+    "dtype": "int8",
+    "log2scale": 4,
+    "previous_layer": [
+      "WeightSharedConvolutionalBoxPredictor_5_BoxPredictor_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  }
+]

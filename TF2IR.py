@@ -724,7 +724,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output_path', default='.', help='output directory')
     parser.add_argument('--image_height', type=int, default=160, help='input image height')
     parser.add_argument('--image_width',  type=int, default=160, help='input image width')
-    parser.add_argument('--input_tensor_name', default='normalized_input_image_tensor:0', help='input tensor name')
+    parser.add_argument('--input_tensor_name', default='c:0', help='input tensor name')
     parser.add_argument('--end_points', default=[
         'BoxPredictor_0/Reshape_1:0', 'BoxPredictor_1/Reshape_1:0', 'BoxPredictor_2/Reshape_1:0', 'BoxPredictor_3/Reshape_1:0', 'BoxPredictor_4/Reshape_1:0', 'BoxPredictor_5/Reshape_1:0', 
         'BoxPredictor_0/Reshape:0', 'BoxPredictor_1/Reshape:0', 'BoxPredictor_2/Reshape:0', 'BoxPredictor_3/Reshape:0', 'BoxPredictor_4/Reshape:0', 'BoxPredictor_5/Reshape:0'], 
