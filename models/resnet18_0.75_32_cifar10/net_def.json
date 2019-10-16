@@ -1,0 +1,1775 @@
+[
+  {
+    "name": "resnet_v1_18_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 7,
+    "weight_log2scale": 5,
+    "bias_log2scale": 7,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 3,
+    "output_channel_num": 64,
+    "input_size": {
+      "height": 32,
+      "width": 32
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 1,
+      "left": 0,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 16,
+      "width": 16
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "input"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_shortcut_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 6,
+    "output_log2scale": 3,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 16,
+      "width": 16
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 64,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 16,
+      "width": 16
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_1_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 16,
+      "width": 16
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 16,
+      "width": 16
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_1_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 192,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "dtype": "int8",
+    "pl_log2scale": 3,
+    "pl_shiftbit": 3,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 1,
+    "pl_name": "resnet_v1_18_block1_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 16,
+      "width": 16
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_2_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 1,
+      "left": 0,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 16,
+      "width": 16
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block1_unit_2_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 192,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "resnet_v1_18_block1_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_1_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block1_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_1_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 384,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 8,
+      "width": 8
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_2_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 1,
+      "left": 0,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 8,
+      "width": 8
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block2_unit_2_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 384,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "resnet_v1_18_block2_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_1_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 768,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 768,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block2_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_1_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 768,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 768,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 4,
+      "width": 4
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_2_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 9,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 1,
+      "left": 0,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 768,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 10,
+    "bias_shift": 9,
+    "load_bias": true,
+    "input_channel_num": 768,
+    "output_channel_num": 768,
+    "input_size": {
+      "height": 4,
+      "width": 4
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block3_unit_2_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 768,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "resnet_v1_18_block3_unit_2_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_1_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 10,
+    "bias_shift": 9,
+    "load_bias": true,
+    "input_channel_num": 768,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_1_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 10,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 1536,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 10,
+    "bias_shift": 9,
+    "load_bias": true,
+    "input_channel_num": 768,
+    "output_channel_num": 1536,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block3_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_1_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 1536,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "resnet_v1_18_block4_unit_1_bottleneck_v1_shortcut_Conv2D_Fold",
+    "add_name": "resnet_v1_18_block4_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_conv3_Conv2D_Fold",
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_shortcut_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_2_bottleneck_v1_conv1_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 10,
+    "bias_shift": 9,
+    "load_bias": true,
+    "input_channel_num": 1536,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_2_bottleneck_v1_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 10,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 10,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 384,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_conv1_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 384,
+    "output_channel_num": 1536,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_add"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_block4_unit_2_bottleneck_v1_add",
+    "operation": "add",
+    "activation_type": "Relu6",
+    "input_channel_num": 1536,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "dtype": "int8",
+    "pl_log2scale": 4,
+    "pl_shiftbit": 4,
+    "add_log2scale": 4,
+    "add_shiftbit": 4,
+    "output_log2scale": 4,
+    "output_shift_bit": 0,
+    "pl_name": "resnet_v1_18_block4_unit_1_bottleneck_v1_add",
+    "add_name": "resnet_v1_18_block4_unit_2_bottleneck_v1_conv3_Conv2D_Fold",
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_1_bottleneck_v1_add",
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_conv3_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "resnet_v1_18_AvgPool_AvgPool"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_AvgPool_AvgPool",
+    "operation": "avg_pool",
+    "input_channel_num": 1536,
+    "input_size": {
+      "height": 2,
+      "width": 2
+    },
+    "input_log2scale": 4,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 2,
+      "width": 2
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 1536,
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_log2scale": 5,
+    "output_dtype": "int8",
+    "input_pre_ls": 1,
+    "previous_layer": [
+      "resnet_v1_18_block4_unit_2_bottleneck_v1_add"
+    ],
+    "next_layer": [
+      "resnet_v1_18_logits_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "resnet_v1_18_logits_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 5,
+    "weight_log2scale": 10,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 11,
+    "bias_shift": 10,
+    "load_bias": true,
+    "input_channel_num": 1536,
+    "output_channel_num": 10,
+    "input_size": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "resnet_v1_18_AvgPool_AvgPool"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  }
+]

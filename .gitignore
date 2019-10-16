@@ -1,2 +1,3 @@
 /models/*/params
 /.vscode/
+/models/*/*.pb

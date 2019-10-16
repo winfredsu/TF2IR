@@ -12,7 +12,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
 
 VALID_ACTS = ['Relu6']
 VALID_CONV_OPS = ['Conv2D', 'DepthwiseConv2dNative']
-VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape']
+VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'AvgPool', 'MaxPool']
 
 class TF2IR(object):
     """
@@ -247,9 +247,60 @@ class TF2IR(object):
                 # assign output_tensor
                 output_tensor = curr_op.outputs[0]
 
-            # elif curr_op.type == 'ConcatV2':
-            #     # find the output to tensors_ready
-            #     output_tensor = curr_op.outputs[0]
+            elif curr_op.type in ['AvgPool', 'MaxPool']:
+                # get ifm/ofm ops
+                ifm_op = self.__get_pool_ifm_op(curr_op)
+                ofm_op = self.__get_pool_ofm_op(curr_op)
+
+                # conv params
+                strides = curr_op.get_attr('strides')[1:3] # (H,W)
+                padding = curr_op.get_attr('padding').decode() # 'SAME' or 'VALID'
+                kernel_size = curr_op.get_attr('ksize')[1:3] # (H,W)
+
+                # size params (needs to eval tensors)
+                # first we evaluate all tensors
+                tensors_to_eval = [op.outputs[0] for op in [ifm_op, ofm_op]]
+                ifm_data, ofm_data = self.__eval_tensors(tensors_to_eval)
+                # then get the sizes
+                cin = ifm_data.shape[3]
+                ifm_size = ifm_data.shape[1:3] # (H,W)
+                cout = ofm_data.shape[3]
+                ofm_size = ofm_data.shape[1:3] # (H,W)
+                # calculate padding sizes (t,b,l,r)
+                padding_size = self.__calc_padding_size(padding, strides, ifm_size, kernel_size, ofm_size)
+
+                # quant_params
+                ifm_num_bits, ifm_log2scale = self.__get_quant_params_from_op(ifm_op)
+                ofm_num_bits, ofm_log2scale = self.__get_quant_params_from_op(ofm_op)
+                input_pre_ls = ofm_log2scale - ifm_log2scale
+                assert input_pre_ls >= 0
+
+                # calc the quantized ifm/ofm tensors
+                ifm_quant_data = np.squeeze(self.__quant_tensor(ifm_data, ifm_log2scale),0) #HWC
+                ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0) # HWC
+
+                # fill layer dict
+                layer['operation'] = 'avg_pool'
+                layer['input_channel_num'] = cin
+                layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
+                layer['input_log2scale'] = ifm_log2scale
+                layer['input_dtype'] = 'int8'
+                layer['kernel_size'] = {'height': kernel_size[0], 'width': kernel_size[1]}
+                layer['stride'] = {'height': strides[0], 'width': strides[1]}
+                layer['padding'] = {'top': padding_size[0], 'bottom': padding_size[1],
+                                    'left': padding_size[2], 'right': padding_size[3]}
+                layer['output_channel_num'] = cout
+                layer['output_size'] = {'height': ofm_size[0], 'width': ofm_size[1]}
+                layer['output_log2scale'] = ofm_log2scale
+                layer['output_dtype'] = 'int8'
+                layer['input_pre_ls'] = input_pre_ls
+
+                # save the tensors
+                np.save(os.path.join(self.output_param_path, layer['name']+'_input.npy'), ifm_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_output.npy'), ofm_quant_data) 
+                                                            
+                # assign output_tensor
+                output_tensor = ofm_op.outputs[0]                 
 
             else:
                 raise ValueError('Unsupported op: ', curr_op)
@@ -311,6 +362,8 @@ class TF2IR(object):
             assert len(op.inputs) == 2
             return [self.__get_real_producer_tensor(op.inputs[0]), self.__get_real_producer_tensor(op.inputs[1])]
         elif op.type == 'Reshape':
+            return [self.__get_real_producer_tensor(op.inputs[0])]
+        elif op.type in ['AvgPool', 'MaxPool']:
             return [self.__get_real_producer_tensor(op.inputs[0])]
         elif op.type == 'ConcatV2':
             n = op.get_attr('N')
@@ -538,6 +591,20 @@ class TF2IR(object):
         assert len(ofm_quant_op.outputs) == 1
         return act_type, ofm_quant_op 
 
+    def __get_pool_ifm_op(self, op):
+        assert(op.type in ['AvgPool', 'MaxPool'])
+        op_ifm = self.__get_real_producer(op.inputs[0])
+        assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
+        return op_ifm
+
+    def __get_pool_ofm_op(self, op):
+        assert(op.type in ['AvgPool', 'MaxPool'])
+        ops_found = self.__get_real_consumers(op.outputs[0])
+        assert len(ops_found) == 1
+        op_ofm = ops_found[0]
+        assert op_ofm.type == 'FakeQuantWithMinMaxVars'
+        return op_ofm
+
     def __get_reshape_params_from_op(self, op):
         """
         return reshape params tensor
@@ -580,13 +647,19 @@ class TF2IR(object):
             pads_along_h = max( (ho-1)*s+k-hi, 0 )
             pads_top = pads_along_h // 2
             pads_bot = pads_along_h - pads_top
+            
+            Note 1:
+            If pads_along_h/w is odd, pads_bot(right) is larger than pads_top(left) by one. 
+            Note 2:
+            In the above equation the max(x,0) is important when kernel size is less than 
+            the stride. In this case, all pads are 0 (do not use negative padding). 
         """
         # calculate padding sizes
         if padding == 'VALID':
             return [0,0,0,0]
         elif padding == 'SAME':
-            pads_along_h = (ofm_size[0]-1)*strides[0]+kernel_size[0]-ifm_size[0]
-            pads_along_w = (ofm_size[1]-1)*strides[1]+kernel_size[1]-ifm_size[1]
+            pads_along_h = max((ofm_size[0]-1)*strides[0]+kernel_size[0]-ifm_size[0],0)
+            pads_along_w = max((ofm_size[1]-1)*strides[1]+kernel_size[1]-ifm_size[1],0)
             tp = int(np.floor(pads_along_h/2))
             bp = int(np.ceil(pads_along_h/2))
             lp = int(np.floor(pads_along_w/2))
