@@ -10,9 +10,9 @@ import sys
 import argparse
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
 
-VALID_ACTS = ['Relu6']
+VALID_ACTS = ['Relu6', 'Relu']
 VALID_CONV_OPS = ['Conv2D', 'DepthwiseConv2dNative']
-VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'AvgPool', 'MaxPool']
+VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'AvgPool', 'MaxPool', 'ConcatV2']
 
 class TF2IR(object):
     """
@@ -24,15 +24,23 @@ class TF2IR(object):
 
     """
 
-    def __init__(self, input_path='graph.pb', output_path='.', img_size=[224,224], input_tensor_name='input', end_points=[], test_image='test.jpg'):
+    def __init__(self, input_path='graph.pb', output_path='.', img_size=[224,224], input_tensor_name='input', end_points=[], test_image='test.jpg',
+        preprocess=False, input_name_before_preprocess='input'):
         self.output_path = output_path
         self.input_path = input_path
         self.img_size = img_size
         self.input_tensor_name = input_tensor_name
         self.end_points = end_points
+        self.preprocess = preprocess
+        self.input_name_before_preprocess = input_name_before_preprocess
         self.net_def = {'layers': []}
+        
         # note that PIL.resize() requires [W,H] as param
-        self.test_img = np.array(PIL.Image.open(test_image).resize([self.img_size[1], self.img_size[0]])).astype(np.float)/128-1
+        if self.preprocess:
+            # in this case the input is in uint8
+            self.test_img = np.array(PIL.Image.open(test_image).resize([self.img_size[1], self.img_size[0]])).astype(np.uint8)
+        else:
+            self.test_img = np.array(PIL.Image.open(test_image).resize([self.img_size[1], self.img_size[0]])).astype(np.float)/128-1
         self.test_img = self.test_img.reshape(1,self.img_size[0],self.img_size[1],3)
 
         self.output_param_path = os.path.join(output_path, 'params')            
@@ -64,7 +72,7 @@ class TF2IR(object):
         # tensors that are already processed
         tensors_ready = [input_tensor]
         # discovered op queue
-        ops_discovered = self.__get_real_consumers(input_tensor)
+        ops_discovered = self.__get_real_consumers_skipND(input_tensor)
         # dict to store the 'prev_layer' infomation
         info_prev_layers = {}
         for op in ops_discovered:
@@ -98,6 +106,11 @@ class TF2IR(object):
                 # conv params
                 strides = curr_op.get_attr('strides')[1:3]
                 padding = curr_op.get_attr('padding').decode()
+                is_dilated, dilations, dilation_paddings = self.__get_conv_dilation(curr_op)
+                # if is_dilated
+                if is_dilated:
+                    assert strides == [1,1] # stride must = 1 when conv is dilated
+                    # assert list(dilations) == [2,2] # currently only support this
 
                 # size params (needs to eval tensors)
                 # first we evaluate all tensors
@@ -109,8 +122,11 @@ class TF2IR(object):
                 kernel_size = w_data.shape[:2] # (H,W)
                 ofm_size = ofm_data.shape[1:3] # (H,W)
                 cout = ofm_data.shape[3]
-                # calculate padding sizes (t,b,l,r)
-                padding_size = self.__calc_padding_size(padding, strides, ifm_size, kernel_size, ofm_size)
+                # calculate padding sizes (t,b,l,r) and dilations
+                if is_dilated:
+                    padding_size = list(dilation_paddings.reshape([-1]))
+                else: 
+                    padding_size = self.__calc_padding_size(padding, strides, ifm_size, kernel_size, ofm_size)
 
                 # quant_params
                 ifm_num_bits, ifm_log2scale = self.__get_quant_params_from_op(ifm_op)
@@ -147,6 +163,7 @@ class TF2IR(object):
                 layer['padding'] = {'top': padding_size[0], 'bottom': padding_size[1],
                                     'left': padding_size[2], 'right': padding_size[3]}
                 layer['stride'] = {'height': strides[0], 'width': strides[1]}
+                layer['dilation'] = {'height': dilations[0], 'width': dilations[1]}
                 layer['kernel_size'] = {'height': kernel_size[0], 'width': kernel_size[1]}
                 layer['output_size'] = {'height': ofm_size[0], 'width': ofm_size[1]}
                 layer['input_dtype'] = 'int8'
@@ -302,6 +319,70 @@ class TF2IR(object):
                 # assign output_tensor
                 output_tensor = ofm_op.outputs[0]                 
 
+            elif curr_op.type == 'ConcatV2':
+                # currently we only support concatv2 input_num=2
+                assert curr_op.get_attr('N') == 2
+
+                # concat dim (0-H, 1-W, 2-C)
+                dict_dim = ['H', 'W', 'C']
+                dim = dict_dim[tf.make_ndarray(curr_op.inputs[2].op.get_attr('value')) - 1]
+
+                # get ifm/ofm ops
+                ifm0_op = self.__get_concat_ifm0_op(curr_op)
+                ifm1_op = self.__get_concat_ifm1_op(curr_op)
+                ofm_op = self.__get_concat_ofm_op(curr_op)
+
+                # size params (needs to eval tensors)
+                # first we evaluate all tensors
+                tensors_to_eval = [op.outputs[0] for op in [ifm0_op, ifm1_op, ofm_op]]
+                ifm0_data, ifm1_data, ofm_data = self.__eval_tensors(tensors_to_eval)
+                # then get the sizes
+                cin0 = ifm0_data.shape[3]
+                cin1 = ifm1_data.shape[3]
+                ifm0_size = ifm0_data.shape[1:3] # (H,W)
+                ifm1_size = ifm1_data.shape[1:3] # (H,W)
+                cout = ofm_data.shape[3]
+                ofm_size = ofm_data.shape[1:3] # (H,W)
+                
+                assert (ifm0_size == ifm1_size)
+                assert cin0 + cin1 == cout
+
+                # quant_params
+                ifm0_num_bits, ifm0_log2scale = self.__get_quant_params_from_op(ifm0_op)
+                ifm1_num_bits, ifm1_log2scale = self.__get_quant_params_from_op(ifm1_op)
+                ofm_num_bits, ofm_log2scale = self.__get_quant_params_from_op(ofm_op)
+
+                # calc the quantized ifm/ofm tensors
+                ifm0_quant_data = np.squeeze(self.__quant_tensor(ifm0_data, ifm0_log2scale),0) #HWC
+                ifm1_quant_data = np.squeeze(self.__quant_tensor(ifm1_data, ifm1_log2scale),0) #HWC
+                ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0) # HWC
+
+                # fill layer dict
+                layer['operation'] = 'concat2'
+                layer['dim'] = dim
+                layer['input0_channel_num'] = cin0
+                layer['input0_size'] = {'height': ifm0_size[0], 'width': ifm0_size[1]}
+                layer['input0_log2scale'] = ifm0_log2scale
+                layer['input0_dtype'] = 'int8'
+
+                layer['input1_channel_num'] = cin1
+                layer['input1_size'] = {'height': ifm1_size[0], 'width': ifm1_size[1]}
+                layer['input1_log2scale'] = ifm1_log2scale
+                layer['input1_dtype'] = 'int8'
+
+                layer['output_channel_num'] = cout
+                layer['output_size'] = {'height': ofm_size[0], 'width': ofm_size[1]}
+                layer['output_log2scale'] = ofm_log2scale
+                layer['output_dtype'] = 'int8'
+
+                # save the tensors
+                np.save(os.path.join(self.output_param_path, layer['name']+'_input0.npy'), ifm0_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_input1.npy'), ifm1_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_output.npy'), ofm_quant_data) 
+                                                            
+                # assign output_tensor
+                output_tensor = ofm_op.outputs[0]   
+
             else:
                 raise ValueError('Unsupported op: ', curr_op)
 
@@ -317,7 +398,7 @@ class TF2IR(object):
 
             # if the output tensor is not end_point, add all consumers to ops_discovered
             if not (output_tensor.name in self.end_points):
-                consumer_ops = self.__get_real_consumers(output_tensor)
+                consumer_ops = self.__get_real_consumers_skipND(output_tensor)
                 for op in consumer_ops:
                     # add op to next_layers
                     next_layers.append(op.name)
@@ -346,7 +427,10 @@ class TF2IR(object):
         """
         g = tf.get_default_graph()
         with tf.Session() as sess:
-            return sess.run(tensors, feed_dict={g.get_tensor_by_name(self.input_tensor_name): self.test_img})
+            if self.preprocess:
+                return sess.run(tensors, feed_dict={g.get_tensor_by_name(self.input_name_before_preprocess): self.test_img})
+            else: 
+                return sess.run(tensors, feed_dict={g.get_tensor_by_name(self.input_tensor_name): self.test_img})
 
     def __get_dep_tensors(self, op):
         """
@@ -356,7 +440,8 @@ class TF2IR(object):
         assert op.type in VALID_OPS
         # for conv ops, return the ifm tensor
         if op.type in ['Conv2D', 'DepthwiseConv2dNative']:
-            return [self.__get_real_producer_tensor(op.inputs[0])]
+            # use skipND version for potentially dilated convs
+            return [self.__get_real_producer_tensor_skipND(op.inputs[0])]
         # for add ops, return both x and y
         elif op.type == 'Add':
             assert len(op.inputs) == 2
@@ -375,8 +460,16 @@ class TF2IR(object):
         Get the real producer tensor of a tensor
         """
         op = tensor.op
-        while op.type == 'Identity':
+        while op.type in ['Identity']:
             assert len(op.inputs) == 1
+            tensor = op.inputs[0]
+            op = tensor.op
+        return tensor
+
+    def __get_real_producer_tensor_skipND(self, tensor):
+        op = tensor.op
+        while op.type in ['Identity', 'BatchToSpaceND', 'SpaceToBatchND']:
+            # assert len(op.inputs) == 1
             tensor = op.inputs[0]
             op = tensor.op
         return tensor
@@ -387,12 +480,24 @@ class TF2IR(object):
         Get the real producer op of a tensor
         """
         op = tensor.op
-        while op.type == 'Identity':
+        while op.type in ['Identity']:
             assert len(op.inputs) == 1
             tensor = op.inputs[0]
             op = tensor.op 
         return op
 
+    def __get_real_producer_skipND(self, tensor):
+        """
+        (tensor to op)
+        Get the real producer op of a tensor
+        """
+        op = tensor.op
+        while op.type in ['Identity', 'BatchToSpaceND', 'SpaceToBatchND']:
+            assert len(op.inputs) == 1
+            tensor = op.inputs[0]
+            op = tensor.op 
+        return op
+    
     def __get_real_consumers(self, tensor):
         """
         (tensor to ops)
@@ -403,17 +508,57 @@ class TF2IR(object):
         while flag:
             flag = 0
             for op in ops:
-                if op.type == 'Identity':
+                if op.type in ['Identity']:
                     assert len(op.outputs) == 1
                     ops += op.outputs[0].consumers()
                     flag = 1
                     ops.remove(op)
         return ops
 
+    def __get_real_consumers_skipND(self, tensor):
+        """
+        (tensor to ops)
+        return a list of real consumer ops of a tensor
+        """
+        ops = tensor.consumers()
+        flag = 1
+        while flag:
+            flag = 0
+            for op in ops:
+                if op.type in ['Identity', 'BatchToSpaceND', 'SpaceToBatchND']:
+                    assert len(op.outputs) == 1
+                    ops += op.outputs[0].consumers()
+                    flag = 1
+                    ops.remove(op)
+        return ops
+
+    def __get_conv_dilation(self, op):
+        """
+        Test if the conv is a dialted conv
+        return: (isDilation, [dilations], [paddings])
+        """
+        assert(op.type == 'Conv2D' or op.type == 'DepthwiseConv2dNative')
+        op_input = self.__get_real_producer(op.inputs[0])
+        if op_input.type == 'SpaceToBatchND':
+            op_output = self.__get_real_consumers(op.outputs[0])[0]
+            assert op_output.type == 'BatchToSpaceND' 
+            input_blocks = tf.make_ndarray(op_input.inputs[1].op.get_attr('value'))
+            input_paddings = tf.make_ndarray(op_input.inputs[2].op.get_attr('value'))
+            output_blocks = tf.make_ndarray(op_output.inputs[1].op.get_attr('value'))
+            output_crops = tf.make_ndarray(op_output.inputs[2].op.get_attr('value'))
+            assert (input_blocks == output_blocks).all()
+            return (True, input_blocks, input_paddings-output_crops)
+        else:
+            return (False, [1,1], [])
+
     def __get_conv_ifm_op(self, op):
         assert(op.type == 'Conv2D' or op.type == 'DepthwiseConv2dNative')
         op_ifm = self.__get_real_producer(op.inputs[0])
-        assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
+        # assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
+        if op_ifm.type == 'SpaceToBatchND':
+            # the dilation case
+            op_ifm = self.__get_real_producer(op_ifm.inputs[0])
+        assert op_ifm.type=='FakeQuantWithMinMaxVars' or op_ifm.outputs[0].name==self.input_tensor_name
         return op_ifm
 
     def __get_conv_w_op(self, op):
@@ -428,7 +573,15 @@ class TF2IR(object):
         tensor_conv = op.outputs[0]
         # the bias add op
         assert len(tensor_conv.consumers()) == 1
-        op_biasadd = tensor_conv.consumers()[0]
+        op_tmp = tensor_conv.consumers()[0]
+        # if this is batchtospacend
+        if op_tmp.type == 'BatchToSpaceND':
+            tensor_b2snd = op_tmp.outputs[0]
+            op_biasadd = tensor_b2snd.consumers()[0]
+        # else this is the bias add op
+        else:
+            op_biasadd = op_tmp
+        
         # the bias tensor
         assert op_biasadd.type == 'Add'
         tensor_bias = op_biasadd.inputs[1]
@@ -445,8 +598,9 @@ class TF2IR(object):
             ofm_op: the output feature map op
         
         The connections after the conv op should be:
-        #    CONV   BIAS
-        #        \ /
+        #    CONV     BIAS
+        #     (S2BND) /
+        #         |  /
         #        ADD
         #         |
         # (Relu6 or Identities)
@@ -460,7 +614,14 @@ class TF2IR(object):
         tensor_conv = op.outputs[0]
         # the bias add op
         assert len(tensor_conv.consumers()) == 1
-        op_biasadd = tensor_conv.consumers()[0]
+        op_tmp = tensor_conv.consumers()[0]
+        # if this is the bathctospacend
+        if op_tmp.type == 'BatchToSpaceND':
+            tensor_b2snd = op_tmp.outputs[0]
+            op_biasadd = tensor_b2snd.consumers()[0]
+        # else this is the bais add op
+        else:
+            op_biasadd = op_tmp
         # the tensor after bias add
         assert op_biasadd.type == 'Add'
         assert len(op_biasadd.outputs) == 1
@@ -532,12 +693,12 @@ class TF2IR(object):
         if op_tmp.type in VALID_ACTS:
             # skip all relu and identities
             op_tmp = self.__get_real_producer(op_tmp.inputs[0])
-        
+
         # now op_tmp should be the add op
         if op_tmp.type != 'Add':
             print(op_tmp)
         assert op_tmp.type == 'Add'
-        op_conv = self.__get_real_producer(op_tmp.inputs[0])
+        op_conv = self.__get_real_producer_skipND(op_tmp.inputs[0])
         if op_conv.type in VALID_CONV_OPS:
             # the add is bias add
             return op_conv
@@ -594,7 +755,7 @@ class TF2IR(object):
     def __get_pool_ifm_op(self, op):
         assert(op.type in ['AvgPool', 'MaxPool'])
         op_ifm = self.__get_real_producer(op.inputs[0])
-        assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
+        # assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
         return op_ifm
 
     def __get_pool_ofm_op(self, op):
@@ -604,6 +765,22 @@ class TF2IR(object):
         op_ofm = ops_found[0]
         assert op_ofm.type == 'FakeQuantWithMinMaxVars'
         return op_ofm
+
+    def __get_concat_ifm0_op(self, op):
+        assert(op.type == 'ConcatV2')
+        return self.__get_real_producer(op.inputs[0])
+
+    def __get_concat_ifm1_op(self, op):
+        assert(op.type == 'ConcatV2')
+        return self.__get_real_producer(op.inputs[1])
+
+    def __get_concat_ofm_op(self, op):
+        assert(op.type == 'ConcatV2')
+        ops_found = self.__get_real_consumers(op.outputs[0])
+        assert len(ops_found) == 1
+        op_ofm = ops_found[0]
+        assert op_ofm.type == 'FakeQuantWithMinMaxVars'
+        return op_ofm 
 
     def __get_reshape_params_from_op(self, op):
         """
@@ -616,14 +793,16 @@ class TF2IR(object):
         """
         return num_bits and log2(scaling factor)
         """
-        assert op.type == 'FakeQuantWithMinMaxVars' or op.type == 'Placeholder'
+        # assert op.type == 'FakeQuantWithMinMaxVars' or op.type == 'Placeholder'
         if op.type == 'FakeQuantWithMinMaxVars':
             num_bits = op.get_attr('num_bits')
             min_po2 = op.inputs[1].op.inputs[0].op.get_attr('value').float_val[0]
             log_scale = int(np.log2(np.power(2,num_bits-1)/np.abs(min_po2)))
             return num_bits, log_scale
-        elif op.type == 'Placeholder':
+        # elif op.type == 'Placeholder':
+        else:
             # check if this is the input tensor
+            # in the case of deeplab preprocess, check if this is the "real" input tensor
             assert op.outputs[0].name == self.input_tensor_name
             return 8, 7
 
@@ -724,15 +903,17 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output_path', default='.', help='output directory')
     parser.add_argument('--image_height', type=int, default=160, help='input image height')
     parser.add_argument('--image_width',  type=int, default=160, help='input image width')
-    parser.add_argument('--input_tensor_name', default='c:0', help='input tensor name')
+    parser.add_argument('--input_tensor_name', default='inputs:0', help='input tensor name')
     parser.add_argument('--end_points', default=[
         'BoxPredictor_0/Reshape_1:0', 'BoxPredictor_1/Reshape_1:0', 'BoxPredictor_2/Reshape_1:0', 'BoxPredictor_3/Reshape_1:0', 'BoxPredictor_4/Reshape_1:0', 'BoxPredictor_5/Reshape_1:0', 
         'BoxPredictor_0/Reshape:0', 'BoxPredictor_1/Reshape:0', 'BoxPredictor_2/Reshape:0', 'BoxPredictor_3/Reshape:0', 'BoxPredictor_4/Reshape:0', 'BoxPredictor_5/Reshape:0'], 
         nargs='+', help='final point names')
     parser.add_argument('--test_image', default='test.jpg', help='example input image for evaluating fmaps')
+    parser.add_argument('--preprocess', type=bool, default=False, help='with preprocessing (such as deeplab)')
+    parser.add_argument('--input_name_before_preprocess', default='input:0', help='when preprocess is true, this is the name of input placeholder')
     args = parser.parse_args()
 
-    tf2ir = TF2IR(args.input_path, args.output_path, [args.image_height, args.image_width], args.input_tensor_name, args.end_points, args.test_image)
+    tf2ir = TF2IR(args.input_path, args.output_path, [args.image_height, args.image_width], args.input_tensor_name, args.end_points, args.test_image, args.preprocess, args.input_name_before_preprocess)
     tf2ir.load_graph()
     tf2ir.traverse_graph()
     tf2ir.export_net_def()
