@@ -12,7 +12,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # disable GPU info
 
 VALID_ACTS = ['Relu6', 'Relu']
 VALID_CONV_OPS = ['Conv2D', 'DepthwiseConv2dNative']
-VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 'Reshape', 'AvgPool', 'MaxPool', 'ConcatV2']
+VALID_OPS = ['Conv2D', 'DepthwiseConv2dNative', 'Add', 
+             'Reshape', 'AvgPool', 'MaxPool', 'ConcatV2', 'ResizeBilinear']
 
 class TF2IR(object):
     """
@@ -160,10 +161,10 @@ class TF2IR(object):
                 layer['input_channel_num'] = cin
                 layer['output_channel_num'] = cout
                 layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
-                layer['padding'] = {'top': padding_size[0], 'bottom': padding_size[1],
-                                    'left': padding_size[2], 'right': padding_size[3]}
+                layer['padding'] = {'top': int(padding_size[0]), 'bottom': int(padding_size[1]),
+                                    'left': int(padding_size[2]), 'right': int(padding_size[3])}
                 layer['stride'] = {'height': strides[0], 'width': strides[1]}
-                layer['dilation'] = {'height': dilations[0], 'width': dilations[1]}
+                layer['dilation'] = {'height': int(dilations[0]), 'width': int(dilations[1])}
                 layer['kernel_size'] = {'height': kernel_size[0], 'width': kernel_size[1]}
                 layer['output_size'] = {'height': ofm_size[0], 'width': ofm_size[1]}
                 layer['input_dtype'] = 'int8'
@@ -266,8 +267,8 @@ class TF2IR(object):
 
             elif curr_op.type in ['AvgPool', 'MaxPool']:
                 # get ifm/ofm ops
-                ifm_op = self.__get_pool_ifm_op(curr_op)
-                ofm_op = self.__get_pool_ofm_op(curr_op)
+                ifm_op = self.__get_single_ifm_op(curr_op)
+                ofm_op = self.__get_single_ofm_op(curr_op)
 
                 # conv params
                 strides = curr_op.get_attr('strides')[1:3] # (H,W)
@@ -383,6 +384,51 @@ class TF2IR(object):
                 # assign output_tensor
                 output_tensor = ofm_op.outputs[0]   
 
+            elif curr_op.type == 'ResizeBilinear':
+                
+                # get ifm/ofm ops
+                ifm_op = self.__get_single_ifm_op(curr_op)
+                ofm_op = self.__get_single_ofm_op(curr_op)
+
+                # resize params
+                align_corners = curr_op.get_attr('align_corners')
+
+                # size params (needs to eval tensors)
+                # first we evaluate all tensors
+                tensors_to_eval = [op.outputs[0] for op in [ifm_op, ofm_op]]
+                ifm_data, ofm_data = self.__eval_tensors(tensors_to_eval)
+                # then get the sizes
+                cin = ifm_data.shape[3]
+                ifm_size = ifm_data.shape[1:3] # (H,W)
+                cout = ofm_data.shape[3]
+                ofm_size = ofm_data.shape[1:3] # (H,W)
+                
+                # quant_params
+                ifm_num_bits, ifm_log2scale = self.__get_quant_params_from_op(ifm_op)
+                ofm_num_bits, ofm_log2scale = self.__get_quant_params_from_op(ofm_op)
+
+                # calc the quantized ifm/ofm tensors
+                ifm_quant_data = np.squeeze(self.__quant_tensor(ifm_data, ifm_log2scale),0) #HWC
+                ofm_quant_data = np.squeeze(self.__quant_tensor(ofm_data, ofm_log2scale),0) # HWC
+
+                # fill layer dict
+                layer['operation'] = 'resize_bilinear'
+                layer['align_corners'] = align_corners
+                layer['input_channel_num'] = cin
+                layer['input_size'] = {'height': ifm_size[0], 'width': ifm_size[1]}
+                layer['input_log2scale'] = ifm_log2scale
+                layer['input_dtype'] = 'int8'
+                layer['output_channel_num'] = cout
+                layer['output_size'] = {'height': ofm_size[0], 'width': ofm_size[1]}
+                layer['output_log2scale'] = ofm_log2scale
+                layer['output_dtype'] = 'int8'
+
+                # save the tensors
+                np.save(os.path.join(self.output_param_path, layer['name']+'_input.npy'), ifm_quant_data)
+                np.save(os.path.join(self.output_param_path, layer['name']+'_output.npy'), ofm_quant_data) 
+                                                            
+                # assign output_tensor
+                output_tensor = ofm_op.outputs[0]        
             else:
                 raise ValueError('Unsupported op: ', curr_op)
 
@@ -448,7 +494,7 @@ class TF2IR(object):
             return [self.__get_real_producer_tensor(op.inputs[0]), self.__get_real_producer_tensor(op.inputs[1])]
         elif op.type == 'Reshape':
             return [self.__get_real_producer_tensor(op.inputs[0])]
-        elif op.type in ['AvgPool', 'MaxPool']:
+        elif op.type in ['AvgPool', 'MaxPool', 'ResizeBilinear']:
             return [self.__get_real_producer_tensor(op.inputs[0])]
         elif op.type == 'ConcatV2':
             n = op.get_attr('N')
@@ -547,7 +593,7 @@ class TF2IR(object):
             output_blocks = tf.make_ndarray(op_output.inputs[1].op.get_attr('value'))
             output_crops = tf.make_ndarray(op_output.inputs[2].op.get_attr('value'))
             assert (input_blocks == output_blocks).all()
-            return (True, input_blocks, input_paddings-output_crops)
+            return (True, input_blocks.astype(np.int), (input_paddings-output_crops).astype(np.int))
         else:
             return (False, [1,1], [])
 
@@ -752,14 +798,14 @@ class TF2IR(object):
         assert len(ofm_quant_op.outputs) == 1
         return act_type, ofm_quant_op 
 
-    def __get_pool_ifm_op(self, op):
-        assert(op.type in ['AvgPool', 'MaxPool'])
+    def __get_single_ifm_op(self, op):
+        assert(op.type in ['AvgPool', 'MaxPool', 'ResizeBilinear'])
         op_ifm = self.__get_real_producer(op.inputs[0])
         # assert op_ifm.type == 'FakeQuantWithMinMaxVars' or 'Placeholder'
         return op_ifm
 
-    def __get_pool_ofm_op(self, op):
-        assert(op.type in ['AvgPool', 'MaxPool'])
+    def __get_single_ofm_op(self, op):
+        assert(op.type in ['AvgPool', 'MaxPool', 'ResizeBilinear'])
         ops_found = self.__get_real_consumers(op.outputs[0])
         assert len(ops_found) == 1
         op_ofm = ops_found[0]

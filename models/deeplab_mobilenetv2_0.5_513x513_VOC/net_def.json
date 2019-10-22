@@ -1,0 +1,3170 @@
+[
+  {
+    "name": "MobilenetV2_Conv_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 7,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 3,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 513,
+      "width": 513
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 257,
+      "width": 257
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "input"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 257,
+      "width": 257
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 257,
+      "width": 257
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_Conv_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 0,
+    "output_shift": 8,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 8,
+    "input_size": {
+      "height": 257,
+      "width": 257
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 257,
+      "width": 257
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_1_expand_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_1_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 0,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 8,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 257,
+      "width": 257
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 257,
+      "width": 257
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_1_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_1_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 5,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 257,
+      "width": 257
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 129,
+      "width": 129
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_1_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_1_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 129,
+      "width": 129
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 129,
+      "width": 129
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_1_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_2_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_2_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_2_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 7,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 12,
+    "output_channel_num": 72,
+    "input_size": {
+      "height": 129,
+      "width": 129
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 129,
+      "width": 129
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_1_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_2_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_2_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 5,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 72,
+    "output_channel_num": 72,
+    "input_size": {
+      "height": 129,
+      "width": 129
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 129,
+      "width": 129
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_2_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_2_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_2_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 0,
+    "output_shift": 8,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 72,
+    "output_channel_num": 12,
+    "input_size": {
+      "height": 129,
+      "width": 129
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 129,
+      "width": 129
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_2_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_2_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_2_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 12,
+    "input_size": {
+      "height": 129,
+      "width": 129
+    },
+    "dtype": "int8",
+    "pl_log2scale": 0,
+    "pl_shiftbit": 0,
+    "add_log2scale": 1,
+    "add_shiftbit": 1,
+    "output_log2scale": 0,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_2_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_1_project_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_2_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_3_expand_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_3_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 0,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 1,
+    "bias_shift": 1,
+    "load_bias": true,
+    "input_channel_num": 12,
+    "output_channel_num": 72,
+    "input_size": {
+      "height": 129,
+      "width": 129
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 129,
+      "width": 129
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_2_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_3_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_3_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 5,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 72,
+    "output_channel_num": 72,
+    "input_size": {
+      "height": 129,
+      "width": 129
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 2,
+      "width": 2
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_3_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_3_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 72,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_3_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_4_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_4_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_4_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_3_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_4_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_4_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_4_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_4_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_4_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_4_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_4_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_4_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "pl_shiftbit": 2,
+    "add_log2scale": 1,
+    "add_shiftbit": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_4_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_3_project_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_4_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_5_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_5_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_5_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_4_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_5_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_5_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_5_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_5_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_5_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 16,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_5_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_5_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_5_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 16,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 1,
+    "pl_shiftbit": 1,
+    "add_log2scale": 1,
+    "add_shiftbit": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_5_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_4_add",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_4_add",
+      "MobilenetV2_expanded_conv_5_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_6_expand_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_6_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 16,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_5_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_6_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_6_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 96,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 1,
+      "bottom": 1,
+      "left": 1,
+      "right": 1
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_6_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_6_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 96,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_6_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_7_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_7_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_7_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_6_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_7_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_7_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 2,
+      "bottom": 2,
+      "left": 2,
+      "right": 2
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_7_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_7_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_7_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
+    "output_shift": 9,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_7_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_7_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_7_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 32,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 1,
+    "pl_shiftbit": 1,
+    "add_log2scale": 1,
+    "add_shiftbit": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_7_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_6_project_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_7_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_8_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_8_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_8_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_7_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_8_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_8_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 2,
+      "bottom": 2,
+      "left": 2,
+      "right": 2
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_8_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_8_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_8_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_8_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_8_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_8_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 32,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "pl_shiftbit": 2,
+    "add_log2scale": 1,
+    "add_shiftbit": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_8_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_7_add",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_7_add",
+      "MobilenetV2_expanded_conv_8_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_9_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_9_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_9_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_8_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_9_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_9_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 2,
+      "bottom": 2,
+      "left": 2,
+      "right": 2
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_9_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_9_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_9_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 32,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_9_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_9_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_9_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 32,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "pl_shiftbit": 2,
+    "add_log2scale": 1,
+    "add_shiftbit": 1,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_9_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_8_add",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_8_add",
+      "MobilenetV2_expanded_conv_9_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_10_expand_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_10_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 32,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_9_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_10_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_10_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 5,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 192,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 2,
+      "bottom": 2,
+      "left": 2,
+      "right": 2
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_10_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_10_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 192,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_10_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_11_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_11_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_11_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 288,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_10_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_11_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_11_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 288,
+    "output_channel_num": 288,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 2,
+      "bottom": 2,
+      "left": 2,
+      "right": 2
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_11_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_11_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_11_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 288,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_11_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_11_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_11_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 48,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "pl_shiftbit": 2,
+    "add_log2scale": 2,
+    "add_shiftbit": 2,
+    "output_log2scale": 2,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_11_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_10_project_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_11_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_12_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_12_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_12_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 288,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_11_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_12_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_12_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 288,
+    "output_channel_num": 288,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 2,
+      "bottom": 2,
+      "left": 2,
+      "right": 2
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_12_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_12_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_12_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 1,
+    "output_shift": 8,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 288,
+    "output_channel_num": 48,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_12_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_12_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_12_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 48,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 1,
+    "pl_shiftbit": 1,
+    "add_log2scale": 2,
+    "add_shiftbit": 2,
+    "output_log2scale": 1,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_12_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_11_add",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_11_add",
+      "MobilenetV2_expanded_conv_12_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_13_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 5,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 48,
+    "output_channel_num": 288,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_12_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_13_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_13_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 5,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 288,
+    "output_channel_num": 288,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 2,
+      "bottom": 2,
+      "left": 2,
+      "right": 2
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 2,
+      "width": 2
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_13_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_13_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 6,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 288,
+    "output_channel_num": 80,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_13_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_14_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_14_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_14_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 80,
+    "output_channel_num": 480,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_13_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_14_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_14_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 480,
+    "output_channel_num": 480,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 4,
+      "bottom": 4,
+      "left": 4,
+      "right": 4
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 4,
+      "width": 4
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_14_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_14_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_14_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 480,
+    "output_channel_num": 80,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_14_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_14_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_14_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 80,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "pl_shiftbit": 2,
+    "add_log2scale": 2,
+    "add_shiftbit": 2,
+    "output_log2scale": 2,
+    "output_shift_bit": 0,
+    "pl_name": "MobilenetV2_expanded_conv_14_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_13_project_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_14_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_15_expand_Conv2D_Fold",
+      "MobilenetV2_expanded_conv_15_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_15_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 80,
+    "output_channel_num": 480,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_14_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_15_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_15_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 480,
+    "output_channel_num": 480,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 4,
+      "bottom": 4,
+      "left": 4,
+      "right": 4
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 4,
+      "width": 4
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_15_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_15_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_15_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 5,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 7,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 480,
+    "output_channel_num": 80,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_15_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_15_add"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_15_add",
+    "operation": "add",
+    "activation_type": "None",
+    "input_channel_num": 80,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "dtype": "int8",
+    "pl_log2scale": 2,
+    "pl_shiftbit": 2,
+    "add_log2scale": 2,
+    "add_shiftbit": 2,
+    "output_log2scale": 1,
+    "output_shift_bit": -1,
+    "pl_name": "MobilenetV2_expanded_conv_15_project_Conv2D_Fold",
+    "add_name": "MobilenetV2_expanded_conv_14_add",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_14_add",
+      "MobilenetV2_expanded_conv_15_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_16_expand_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_16_expand_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu6",
+    "input_log2scale": 1,
+    "weight_log2scale": 9,
+    "bias_log2scale": 5,
+    "output_log2scale": 4,
+    "output_shift": 6,
+    "bias_shift": 5,
+    "load_bias": true,
+    "input_channel_num": 80,
+    "output_channel_num": 480,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_15_add"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_16_depthwise_depthwise_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_16_depthwise_depthwise_Fold",
+    "operation": "dwconv",
+    "activation_type": "Relu6",
+    "input_log2scale": 4,
+    "weight_log2scale": 4,
+    "bias_log2scale": 4,
+    "output_log2scale": 4,
+    "output_shift": 4,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 480,
+    "output_channel_num": 480,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 4,
+      "bottom": 4,
+      "left": 4,
+      "right": 4
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 4,
+      "width": 4
+    },
+    "kernel_size": {
+      "height": 3,
+      "width": 3
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_16_expand_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "MobilenetV2_expanded_conv_16_project_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "MobilenetV2_expanded_conv_16_project_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 7,
+    "bias_log2scale": 4,
+    "output_log2scale": 2,
+    "output_shift": 9,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 480,
+    "output_channel_num": 160,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_16_depthwise_depthwise_Fold"
+    ],
+    "next_layer": [
+      "AvgPool2D_AvgPool",
+      "aspp0_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "aspp0_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu",
+    "input_log2scale": 2,
+    "weight_log2scale": 9,
+    "bias_log2scale": 7,
+    "output_log2scale": 4,
+    "output_shift": 7,
+    "bias_shift": 4,
+    "load_bias": true,
+    "input_channel_num": 160,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_16_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "concat"
+    ]
+  },
+  {
+    "name": "AvgPool2D_AvgPool",
+    "operation": "avg_pool",
+    "input_channel_num": 160,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_log2scale": 2,
+    "input_dtype": "int8",
+    "kernel_size": {
+      "height": 65,
+      "width": 65
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "output_channel_num": 160,
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "input_pre_ls": 2,
+    "previous_layer": [
+      "MobilenetV2_expanded_conv_16_project_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "image_pooling_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "image_pooling_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 5,
+    "output_log2scale": 5,
+    "output_shift": 7,
+    "bias_shift": 7,
+    "load_bias": true,
+    "input_channel_num": 160,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 1,
+      "width": 1
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 1,
+      "width": 1
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "AvgPool2D_AvgPool"
+    ],
+    "next_layer": [
+      "ResizeBilinear"
+    ]
+  },
+  {
+    "name": "ResizeBilinear",
+    "operation": "resize_bilinear",
+    "align_corners": true,
+    "input_channel_num": 256,
+    "input_size": {
+      "height": 1,
+      "width": 1
+    },
+    "input_log2scale": 5,
+    "input_dtype": "int8",
+    "output_channel_num": 256,
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "output_log2scale": 5,
+    "output_dtype": "int8",
+    "previous_layer": [
+      "image_pooling_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "concat"
+    ]
+  },
+  {
+    "name": "concat",
+    "operation": "concat2",
+    "dim": "C",
+    "input0_channel_num": 256,
+    "input0_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input0_log2scale": 5,
+    "input0_dtype": "int8",
+    "input1_channel_num": 256,
+    "input1_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input1_log2scale": 4,
+    "input1_dtype": "int8",
+    "output_channel_num": 512,
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "previous_layer": [
+      "aspp0_Conv2D_Fold",
+      "ResizeBilinear"
+    ],
+    "next_layer": [
+      "concat_projection_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "concat_projection_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "Relu",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 6,
+    "output_log2scale": 4,
+    "output_shift": 8,
+    "bias_shift": 6,
+    "load_bias": true,
+    "input_channel_num": 512,
+    "output_channel_num": 256,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "concat"
+    ],
+    "next_layer": [
+      "logits_semantic_Conv2D_Fold"
+    ]
+  },
+  {
+    "name": "logits_semantic_Conv2D_Fold",
+    "operation": "conv",
+    "activation_type": "None",
+    "input_log2scale": 4,
+    "weight_log2scale": 8,
+    "bias_log2scale": 4,
+    "output_log2scale": 3,
+    "output_shift": 9,
+    "bias_shift": 8,
+    "load_bias": true,
+    "input_channel_num": 256,
+    "output_channel_num": 21,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "stride": {
+      "height": 1,
+      "width": 1
+    },
+    "dilation": {
+      "height": 1,
+      "width": 1
+    },
+    "kernel_size": {
+      "height": 1,
+      "width": 1
+    },
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "weight_dtype": "int8",
+    "bias_dtype": "int8",
+    "previous_layer": [
+      "concat_projection_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "ResizeBilinear_1"
+    ]
+  },
+  {
+    "name": "ResizeBilinear_1",
+    "operation": "resize_bilinear",
+    "align_corners": true,
+    "input_channel_num": 21,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_log2scale": 3,
+    "input_dtype": "int8",
+    "output_channel_num": 21,
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "output_log2scale": 3,
+    "output_dtype": "int8",
+    "previous_layer": [
+      "logits_semantic_Conv2D_Fold"
+    ],
+    "next_layer": [
+      "ResizeBilinear_2"
+    ]
+  },
+  {
+    "name": "ResizeBilinear_2",
+    "operation": "resize_bilinear",
+    "align_corners": true,
+    "input_channel_num": 21,
+    "input_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input_log2scale": 3,
+    "input_dtype": "int8",
+    "output_channel_num": 21,
+    "output_size": {
+      "height": 513,
+      "width": 513
+    },
+    "output_log2scale": 3,
+    "output_dtype": "int8",
+    "previous_layer": [
+      "ResizeBilinear_1"
+    ],
+    "next_layer": [
+      "endpoint"
+    ]
+  }
+]
