@@ -41,6 +41,7 @@
 #### CONV/DWCONV
 - `operation`: `conv`代表二维卷积，`dwconv`代表深度可分离卷积
 - `activation_type`: 卷积操作内的激活类型，可取值`Relu6`, `None`
+- `dilations`: 对于普通卷积，该项应为[1,1], 对于空洞卷积(dilated/atrous conv), 该项为H/W方向的dilation. 注意对于空洞卷积操作，strides必须为1. 此外，Tensorflow.slim库对空洞卷积的处理方式为(space2batch-conv_with_dilation1-batch2space), 此IR中的padding信息根据原有space2batch和batch2space计算得到。
 - `xx_log2scale`: 该tensor对应的log2(scale), 例如：某input_tensor的实际范围为[-4,4), 使用8bit量化，则对应的`input_log2scale=5`
 - `output_shift`: 中间结果->输出的右移位数，`output_shift=input_log2scale+weight_log2scale-output_log2scale`
 - `bias_shift`: 加偏置时的偏置左移位数，`bias_shift=input_log2scale+weight_log2scale-bias_log2scale`
@@ -74,6 +75,10 @@
     "stride": {
       "height": 2,
       "width": 2
+    },
+    "dilations": {
+      "height": 1, 
+      "width": 1
     },
     "kernel_size": {
       "height": 3,
@@ -168,14 +173,13 @@
   }
 ```
 
-#### AVGPOOL
+#### AVGPOOL/MAXPOOL
 - `dtype`: 数据类型，目前都应为`int8`
 - `kernel_size`: average pooling范围参数
 - `input_log2scale`, `output_log2scale`: 输入和输出的scale, 由于average pooling操作会改变tensor范围，因此二者可能不同（`input_log2scale`小于`output_log2scale`)
 - `input_pre_ls`: 由于存在上述问题，可将输入的整数提前左移后求平均再取整，该键定义了“提前左移”的位移量
 - `input_size`, `stride`, `padding`, `kernel_size`与`output_size`的关系：
   
-
 ``` json
   {
     "name": "resnet_v1_18/AvgPool",
@@ -217,6 +221,57 @@
     ]
   }
 ```
+
+#### ResizeBilinear
+双线性插值，用于改变feature map大小
+- `dtype`: 数据类型，目前都应为`int8`
+- `align_corners`: 参考tensorflow resizebilinear的说明
+- `input_log2scale`, `output_log2scale`: 输入和输出的scale, 由于某些未知原因二者可能不同
+
+#### ConcatV2
+目前仅支持二输入的concat, 在H/W/C方向上进行concat.
+- `dim`: concat方向
+- `input0_log2scale`, `input1_log2scale`, `output_log2scale`: 两个输入和输出的scale, 可能不同，可通过预移位处理。
+
+```json
+  {
+    "name": "concat",
+    "operation": "concat2",
+    "dim": "C",
+    "input0_channel_num": 256,
+    "input0_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input0_log2scale": 5,
+    "input0_dtype": "int8",
+    "input1_channel_num": 256,
+    "input1_size": {
+      "height": 65,
+      "width": 65
+    },
+    "input1_log2scale": 4,
+    "input1_dtype": "int8",
+    "output_channel_num": 512,
+    "output_size": {
+      "height": 65,
+      "width": 65
+    },
+    "output_log2scale": 4,
+    "output_dtype": "int8",
+    "previous_layer": [
+      "aspp0_Conv2D_Fold",
+      "ResizeBilinear"
+    ],
+    "next_layer": [
+      "concat_projection_Conv2D_Fold"
+    ]
+  },
+
+
+```
+
+
 
 ## 5. 解析原理
 ### 5.1 找到input tensor
